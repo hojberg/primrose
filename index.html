@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html lang='en'>
+
+  <head>
+    <title>Primrose experiments</title>
+    <style>
+      .result { width: 20px; height: 20px; background: #ccc; }
+      .result.pass { background: green; }
+      .result.fail { background: red; }
+    </style>
+  </head>
+
+  <body>
+    <div class='result'></div>
+    <script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>
+    <script>
+      YUI({
+
+        modules: {
+          'primrose': {
+            fullpath: 'js/primrose.js'
+          },
+          'primrose-suite': {
+            fullpath: 'js/suite.js'
+          },
+          'primrose-spec': {
+            fullpath: 'js/spec.js'
+          },
+          'primrose-expectation': {
+            fullpath: 'js/expectation.js'
+          }
+        }
+
+      }).use('primrose', 'node', function (Y) {
+        var P = Y.Primrose,
+          resultNode;
+
+        // what the problem is? 
+        P.it('creates a Spec', function () {
+          this.expect(1).toBe(2);
+        });
+
+        resultNode = Y.one('.result');
+        resultNode.addClass( Y.Primrose.run() ? 'pass' : 'fail' );
+
+      });
+    </script>
+  </body>
+</html>
