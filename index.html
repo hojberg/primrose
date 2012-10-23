@@ -34,11 +34,11 @@
 
       }).use('primrose', 'node', function (Y) {
         var P = Y.Primrose,
-          resultNode;
+            resultNode;
 
         // what the problem is? 
         P.it('creates a Spec', function () {
-          this.expect(1).toBe(2);
+          this.expect(1).toBe(1);
         });
 
         resultNode = Y.one('.result');

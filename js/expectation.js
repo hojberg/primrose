@@ -44,10 +44,11 @@ YUI.add('primrose-expectation', function (Y) {
     ATTRS: {
 
       /**
-      @attribute 
-      **/
-      subject: {}
+      @attribute subject
+      **/ 
+      subject: {},
 
+      result: {}
     }
   });
 },
