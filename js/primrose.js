@@ -15,6 +15,8 @@ YUI.add('primrose', function (Y) {
       description: description
     });
 
+    currentSuite = suite;
+
     specs.call(suite);
   };
 
@@ -29,6 +31,7 @@ YUI.add('primrose', function (Y) {
     });
 
     currentSpec = spec;
+    currentSuite.add(spec);
 
     specification.call(spec);
   };
@@ -49,7 +52,7 @@ YUI.add('primrose', function (Y) {
   **/
   Y.Primrose.run = function () {
     // currently just run the currentSpec
-    return currentSpec.run();
+    return currentSuite.run();
   };
 
 },

@@ -46,6 +46,7 @@ YUI.add('primrose-spec', function (Y) {
     @method run
     **/
     run: function () {
+      Y.log('run', 'debug', this.get('name'));
       var result;
 
       Y.Array.every(this.get('expectations'), function (expectation) {

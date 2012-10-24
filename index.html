@@ -36,9 +36,18 @@
         var P = Y.Primrose,
             resultNode;
 
-        // what the problem is? 
-        P.it('creates a Spec', function () {
-          this.expect(1).toBe(1);
+        P.describe('Specify', function () {
+
+          P.describe('something else', function () {
+            P.it('specs something', function () {
+              this.expect(1).toBe(2);
+            });
+          });
+
+          P.it('creates a Spec', function () {
+            this.expect(1).toBe(2);
+          });
+
         });
 
         resultNode = Y.one('.result');

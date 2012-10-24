@@ -36,6 +36,7 @@ YUI.add('primrose-expectation', function (Y) {
     @method validate
     **/
     validate: function () {
+      Y.log('validate', 'debug');
       return this.get('subject') == this.get('result');
     }
 
@@ -44,10 +45,22 @@ YUI.add('primrose-expectation', function (Y) {
     ATTRS: {
 
       /**
+      @attribute polarity
+      **/
+      polarity: {
+        value: false
+      },
+
+      /**
       @attribute subject
+      @type {any}
       **/ 
       subject: {},
 
+      /**
+      @attribute result
+      @type {any}
+      **/
       result: {}
     }
   });

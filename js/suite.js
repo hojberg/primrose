@@ -21,10 +21,6 @@ YUI.add('primrose-suite', function (Y) {
     **/
     add: function (specOrSuite) {
       this.get('children').push(specOrSuite);
-      
-      this.get(
-        specOrSuite.isSuite() ? 'suite' : 'spec'
-      ).push(specOrSuite);
     },
 
     /**
@@ -33,9 +29,18 @@ YUI.add('primrose-suite', function (Y) {
     @method run
     **/
     run: function () {
+      var passed = true
+      Y.log('run', 'debug', this.get('description'));
+
       Y.Array.each(this.get('children'), function (child) {
-        child.run();
+        var childResult = child.run();
+
+        if (!childResult) result = childResult;
       });
+
+      this.set('passed', result);
+
+      return result;
     }
 
   },
