@@ -16,7 +16,6 @@
     <script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>
     <script>
       YUI({
-
         modules: {
           'primrose': {
             fullpath: 'js/primrose.js'
@@ -31,28 +30,39 @@
             fullpath: 'js/expectation.js'
           }
         }
-
       }).use('primrose', 'node', function (Y) {
+
         var P = Y.Primrose,
             resultNode;
 
-        P.describe('Specify', function () {
+        P.describe('UserView', function () {
 
-          P.describe('something else', function () {
-            P.it('specs something', function () {
+          P.describe('rendition', function () {
+            P.it('renders an avatar', function () {
               this.expect(1).toBe(2);
+            });
+
+            P.describe('render', function () {
+              P.it('is chainable', function () {
+                this.expect(1).toBe(2);
+              });
             });
           });
 
-          P.it('creates a Spec', function () {
+          P.it('has a user as the model', function () {
             this.expect(1).toBe(2);
+          });
+
+          P.describe('When user loads', function () {
+            P.it('calls render', function () {
+              this.expect(1).toBe(1);
+            });
           });
 
         });
 
         resultNode = Y.one('.result');
         resultNode.addClass( Y.Primrose.run() ? 'pass' : 'fail' );
-
       });
     </script>
   </body>

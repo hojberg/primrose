@@ -16,8 +16,7 @@ YUI.add('primrose-expectation', function (Y) {
 
     @method not
     **/
-    not: function () {
-    },
+    not: function () {},
 
     /**
     record what the subject should be
@@ -36,7 +35,7 @@ YUI.add('primrose-expectation', function (Y) {
     @method validate
     **/
     validate: function () {
-      Y.log('validate', 'debug');
+      Y.log('   EXPECT', 'debug');
       return this.get('subject') == this.get('result');
     }
 

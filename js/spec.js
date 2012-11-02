@@ -1,4 +1,8 @@
 YUI.add('primrose-spec', function (Y) { 
+  { a:{
+      b: {}
+    } 
+  }
 
   /**
   A Spec defines an `it` block
@@ -46,7 +50,8 @@ YUI.add('primrose-spec', function (Y) {
     @method run
     **/
     run: function () {
-      Y.log('run', 'debug', this.get('name'));
+      Y.log('IT: ' + this.get('name'), 'debug');
+
       var result;
 
       Y.Array.every(this.get('expectations'), function (expectation) {

@@ -2,22 +2,40 @@ YUI.add('primrose', function (Y) {
 
   Y.namespace('Primrose');
 
-  var currentSuite,
+  var topSuite,
+      parentSuite,
       currentSpec;
 
   /**
   create a new Primrose.Suite and sub suites/specs
 
   @method describe
+  @todo OMG this code is badly name
   **/
   Y.Primrose.describe = function (description, specs) {
-    var suite = new Y.Primrose.Suite({
+    var oldParentSuite, suite;
+    
+    suite = new Y.Primrose.Suite({
       description: description
     });
 
-    currentSuite = suite;
+    if (parentSuite) {
+      oldParentSuite = parentSuite;
+      parentSuite.add(suite);
+    }
+    else {
+      topSuite = suite;
+    }
+
+    parentSuite = suite;
 
     specs.call(suite);
+
+    // set the suite back to the parent
+    if (oldParentSuite) {
+      parentSuite = oldParentSuite;
+    }
+
   };
 
   /**
@@ -31,7 +49,7 @@ YUI.add('primrose', function (Y) {
     });
 
     currentSpec = spec;
-    currentSuite.add(spec);
+    parentSuite.add(spec);
 
     specification.call(spec);
   };
@@ -51,8 +69,7 @@ YUI.add('primrose', function (Y) {
   @method run
   **/
   Y.Primrose.run = function () {
-    // currently just run the currentSpec
-    return currentSuite.run();
+    return topSuite.run();
   };
 
 },

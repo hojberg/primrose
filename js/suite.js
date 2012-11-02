@@ -30,17 +30,20 @@ YUI.add('primrose-suite', function (Y) {
     **/
     run: function () {
       var passed = true
-      Y.log('run', 'debug', this.get('description'));
+
+      Y.log('>> DESCRIBE: ' + this.get('description'), 'debug');
 
       Y.Array.each(this.get('children'), function (child) {
         var childResult = child.run();
 
-        if (!childResult) result = childResult;
+        if (!childResult) passed = childResult;
       });
 
-      this.set('passed', result);
+      Y.log('<< DESCRIBE: ' + this.get('description'), 'debug');
 
-      return result;
+      this.set('passed', passed);
+
+      return passed;
     }
 
   },
@@ -76,10 +79,19 @@ YUI.add('primrose-suite', function (Y) {
       **/
       children: {
         value: []
+      },
+
+      /**
+      does the suite subtree pass
+      
+      @attribute passed
+      @type {Boolean}
+      **/
+      passed: {
+        value: true
       }
 
     }
-
  
   });
 
