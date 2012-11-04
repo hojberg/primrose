@@ -6,21 +6,27 @@ YUI.add('primrose-suite', function (Y) {
   @class Suite
   @namespace Primrose
   @extends BaseCore
+  @uses Primrose.BeforeEach
   @constructor
   **/
   Y.namespace('Primrose').Suite = Y.Base.create('primrose:suite',
     Y.BaseCore,
-    [],
+    [Y.Primrose.BeforeEach],
   {
 
     /**
     add a spec or a suite to the suite
 
     @method add
-    @param {Primrose.Spec|Primrose.Suite} specOrSuite
+    @param {Primrose.Spec|Primrose.Suite} child
     **/
-    add: function (specOrSuite) {
-      this.get('children').push(specOrSuite);
+    add: function (child) {
+      var befores = this.get('beforeList');
+
+      this.get('children').push(child);
+
+      // add any beforeEach blocks to the child
+      if (befores.length) child.addBefores( befores );
     },
 
     /**
@@ -29,21 +35,12 @@ YUI.add('primrose-suite', function (Y) {
     @method run
     **/
     run: function () {
-      var passed = true
-
       Y.log('>> DESCRIBE: ' + this.get('description'), 'debug');
 
-      Y.Array.each(this.get('children'), function (child) {
-        var childResult = child.run();
-
-        if (!childResult) passed = childResult;
-      });
+      // run all children
+      Y.Array.invoke(this.get('children'), 'run');
 
       Y.log('<< DESCRIBE: ' + this.get('description'), 'debug');
-
-      this.set('passed', passed);
-
-      return passed;
     }
 
   },
@@ -58,22 +55,6 @@ YUI.add('primrose-suite', function (Y) {
       description: {},
 
       /**
-      @attribute specs
-      @type {Array[Primrose.Spec]}
-      **/
-      specs: {
-        value: []
-      },
-
-      /**
-      @attribute suites
-      @type {Array[Primrose.Suite]}
-      **/
-      suites: {
-        value: []
-      },
-
-      /**
       @attribute children
       @type {Array[Primrose.Spec|Primrose.Suite]}
       **/
@@ -82,13 +63,11 @@ YUI.add('primrose-suite', function (Y) {
       },
 
       /**
-      does the suite subtree pass
-      
-      @attribute passed
-      @type {Boolean}
+      @attribute beforeList
+      @type {Array[Function]}
       **/
-      passed: {
-        value: true
+      beforeList: {
+        value: []
       }
 
     }
@@ -100,6 +79,7 @@ YUI.add('primrose-suite', function (Y) {
 {
   requires: [
     'base',
-    'primrose-spec'
+    'primrose-spec',
+    'primrose-before-each'
   ]
 });

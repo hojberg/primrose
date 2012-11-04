@@ -39,9 +39,21 @@ YUI.add('primrose', function (Y) {
   };
 
   /**
+  add a block to run before each spec in the current describe subtree
+
+  @method beforeEach
+  @param {Function} before
+  **/
+  Y.Primrose.beforeEach = function (before) {
+    parentSuite.addBefores([before]);
+  };
+
+  /**
   create a new Primrose.Spec for the current suite
 
   @method it
+  @param {String} name
+  @param {Function} specification
   **/
   Y.Primrose.it = function (name, specification) {
     var spec = new Y.Primrose.Spec({ 
@@ -58,6 +70,8 @@ YUI.add('primrose', function (Y) {
   create a new Primrose.Expectation for the current spec
 
   @method expect
+  @param {any} subject
+  @return {Primrose.Expectation}
   **/
   Y.Primrose.expect = function (subject) {
     return currentSpec.expect( subject );
