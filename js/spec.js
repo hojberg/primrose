@@ -1,8 +1,4 @@
 YUI.add('primrose-spec', function (Y) { 
-  { a:{
-      b: {}
-    } 
-  }
 
   /**
   A Spec defines an `it` block
@@ -10,11 +6,12 @@ YUI.add('primrose-spec', function (Y) {
   @class Spec
   @namespace Primrose
   @extends BaseCore
+  @uses Primrose.BeforeEach
   @constructor
   **/
   Y.namespace('Primrose').Spec = Y.Base.create('primrose:spec', 
     Y.BaseCore,
-    [],
+    [Y.Primrose.BeforeEach],
   {
 
     /**
@@ -50,17 +47,15 @@ YUI.add('primrose-spec', function (Y) {
     @method run
     **/
     run: function () {
-      Y.log('IT: ' + this.get('name'), 'debug');
-
-      var result;
-
-      Y.Array.every(this.get('expectations'), function (expectation) {
-        return result = expectation.validate();
+      // run any beforeEach blocks
+      Y.Array.each(this.get('beforeList'), function (before) {
+        before();
       });
 
-      this.set('result', result);
-
-      return result;
+      Y.log('IT: ' + this.get('name'), 'debug');
+      
+      // validate all expectations
+      Y.Array.invoke(this.get('expectation'), 'validate');
     }
 
   },
@@ -84,13 +79,13 @@ YUI.add('primrose-spec', function (Y) {
       },
 
       /**
-      @attribute result
-      @type {Boolean}
-      @default true
+      @attribute beforeList
+      @type {Array[Function]}
       **/
-      result: {
-        value: true
+      beforeList: {
+        value: []
       }
+
     }
   });
 
@@ -100,6 +95,7 @@ YUI.add('primrose-spec', function (Y) {
   requires: [
     'base',
     'collection',
-    'primrose-expectation'
+    'primrose-expectation',
+    'primrose-before-each'
   ]
 });

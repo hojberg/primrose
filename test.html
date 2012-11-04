@@ -4,15 +4,9 @@
 
   <head>
     <title>Primrose experiments</title>
-    <style>
-      .result { width: 20px; height: 20px; background: #ccc; }
-      .result.pass { background: green; }
-      .result.fail { background: red; }
-    </style>
   </head>
 
   <body>
-    <div class='result'></div>
     <script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>
     <script>
       YUI({
@@ -23,6 +17,9 @@
           'primrose-suite': {
             fullpath: 'js/suite.js'
           },
+          'primrose-before-each': {
+            fullpath: 'js/before_each.js'
+          },
           'primrose-spec': {
             fullpath: 'js/spec.js'
           },
@@ -32,19 +29,31 @@
         }
       }).use('primrose', 'node', function (Y) {
 
-        var P = Y.Primrose,
-            resultNode;
+        var P = Y.Primrose;
 
         P.describe('UserView', function () {
 
+          var subject;
+
+          P.beforeEach(function () {
+            subject = 42;
+            Y.log('beforeEach: top level');
+          });
+
           P.describe('rendition', function () {
             P.it('renders an avatar', function () {
-              this.expect(1).toBe(2);
+              this.expect(subject).toBe(42);
             });
 
             P.describe('render', function () {
+
+              P.beforeEach(function () {
+                subject = 43;
+                Y.log('beforeEach: render level');
+              });
+
               P.it('is chainable', function () {
-                this.expect(1).toBe(2);
+                this.expect(subject).toBe(43);
               });
             });
           });
@@ -61,8 +70,7 @@
 
         });
 
-        resultNode = Y.one('.result');
-        resultNode.addClass( Y.Primrose.run() ? 'pass' : 'fail' );
+        Y.Primrose.run();
       });
     </script>
   </body>

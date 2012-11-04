@@ -12,13 +12,6 @@ YUI.add('primrose-expectation', function (Y) {
   {
 
     /**
-    reverse the polarity
-
-    @method not
-    **/
-    not: function () {},
-
-    /**
     record what the subject should be
 
     @method toBe
