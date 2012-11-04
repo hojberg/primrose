@@ -8,19 +8,8 @@ YUI.add('primrose-expectation', function (Y) {
   **/
   Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation', 
     Y.BaseCore,
-    [],
+    [Y.Primrose.Matchers],
   {
-
-    /**
-    record what the subject should be
-
-    @method toBe
-    @param {any} result
-    @todo move this to a Matcher mixin
-    **/
-    toBe: function ( result ) {
-      this.set('result', result);
-    },
 
     /**
     validate the expecation
@@ -29,7 +18,7 @@ YUI.add('primrose-expectation', function (Y) {
     **/
     validate: function () {
       Y.log('   EXPECT', 'debug');
-      return this.get('subject') == this.get('result');
+      return this.get('subject') === this.get('result');
     }
 
   },
@@ -60,6 +49,7 @@ YUI.add('primrose-expectation', function (Y) {
 '0.0.1',
 {
   requires: [
-    'base'
+    'base-core',
+    'primrose-matchers'
   ]
 });
