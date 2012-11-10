@@ -8,28 +8,54 @@ YUI.add('primrose-expectation', function (Y) {
   **/
   Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation', 
     Y.BaseCore,
-    [],
+    [Y.Primrose.Matchers],
   {
 
     /**
-    record what the subject should be
-
-    @method toBe
-    @param {any} result
-    @todo move this to a Matcher mixin
+    @method run
     **/
-    toBe: function ( result ) {
-      this.set('result', result);
+    run: function () {
+      var valid = this.validate();
+
+      // TODO build reporters
+      Y.log('   EXPECT: ' + (valid ? 'passed' : 'failed'), 'debug');
     },
 
     /**
-    validate the expecation
+    reverse the validation
+
+    @method not
+    **/
+    not: function () {
+      this.set('not', true);
+      return this;
+    },
+
+    /**
+    to be overwritten by the matcher
+
+    @method validator
+    @return {Boolean}
+    @default false
+    **/
+    validator: function (subject) {
+      return false;
+    },
+
+    /**
+    validate the matcher
 
     @method validate
     **/
     validate: function () {
-      Y.log('   EXPECT', 'debug');
-      return this.get('subject') == this.get('result');
+      var result = this.validator.call(
+        this, 
+        this.get('subject')
+      );
+
+      if (this.get('not')) result = !result;
+
+      return result;
     }
 
   },
@@ -37,9 +63,9 @@ YUI.add('primrose-expectation', function (Y) {
     ATTRS: {
 
       /**
-      @attribute polarity
+      @attribute not
       **/
-      polarity: {
+      not: {
         value: false
       },
 
@@ -60,6 +86,7 @@ YUI.add('primrose-expectation', function (Y) {
 '0.0.1',
 {
   requires: [
-    'base'
+    'base-core',
+    'primrose-matchers'
   ]
 });

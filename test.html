@@ -25,6 +25,9 @@
           },
           'primrose-expectation': {
             fullpath: 'js/expectation.js'
+          },
+          'primrose-matchers': {
+            fullpath: 'js/matchers.js'
           }
         }
       }).use('primrose', 'node', function (Y) {
@@ -42,7 +45,7 @@
 
           P.describe('rendition', function () {
             P.it('renders an avatar', function () {
-              this.expect(subject).toBe(42);
+              P.expect(subject).toBe(42);
             });
 
             P.describe('render', function () {
@@ -53,18 +56,18 @@
               });
 
               P.it('is chainable', function () {
-                this.expect(subject).toBe(43);
+                P.expect(subject).toBe(43);
               });
             });
           });
 
           P.it('has a user as the model', function () {
-            this.expect(1).toBe(2);
+            P.expect(1).not().toBe(2);
           });
 
           P.describe('When user loads', function () {
             P.it('calls render', function () {
-              this.expect(1).toBe(1);
+              P.expect(1).toBe(1);
             });
           });
 

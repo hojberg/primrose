@@ -55,7 +55,7 @@ YUI.add('primrose-spec', function (Y) {
       Y.log('IT: ' + this.get('name'), 'debug');
       
       // validate all expectations
-      Y.Array.invoke(this.get('expectation'), 'validate');
+      Y.Array.invoke(this.get('expectations'), 'run');
     }
 
   },
