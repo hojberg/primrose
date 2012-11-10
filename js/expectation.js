@@ -12,13 +12,50 @@ YUI.add('primrose-expectation', function (Y) {
   {
 
     /**
-    validate the expecation
+    @method run
+    **/
+    run: function () {
+      var valid = this.validate();
+
+      // TODO build reporters
+      Y.log('   EXPECT: ' + (valid ? 'passed' : 'failed'), 'debug');
+    },
+
+    /**
+    reverse the validation
+
+    @method not
+    **/
+    not: function () {
+      this.set('not', true);
+      return this;
+    },
+
+    /**
+    to be overwritten by the matcher
+
+    @method validator
+    @return {Boolean}
+    @default false
+    **/
+    validator: function (subject) {
+      return false;
+    },
+
+    /**
+    validate the matcher
 
     @method validate
     **/
     validate: function () {
-      Y.log('   EXPECT', 'debug');
-      return this.get('subject') === this.get('result');
+      var result = this.validator.call(
+        this, 
+        this.get('subject')
+      );
+
+      if (this.get('not')) result = !result;
+
+      return result;
     }
 
   },
@@ -26,9 +63,9 @@ YUI.add('primrose-expectation', function (Y) {
     ATTRS: {
 
       /**
-      @attribute polarity
+      @attribute not
       **/
-      polarity: {
+      not: {
         value: false
       },
 

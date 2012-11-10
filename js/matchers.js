@@ -12,10 +12,12 @@ YUI.add('primrose-matchers', function (Y) {
     record what the subject should be
 
     @method toBe
-    @param {any} result
+    @param {any} expected
     **/
-    toBe: function ( result ) {
-      this.set('result', result);
+    toBe: function (expected) {
+      this.validator = function (subject) {
+        return subject === expected;
+      }
     }
   };
 
