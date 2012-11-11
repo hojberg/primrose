@@ -3,12 +3,14 @@ YUI.add('primrose-expectation', function (Y) {
   /**
   @class Expectation
   @namespace Primrose
-  @extends BaseCore
+  @extends Base
+  @uses Primrose.Matchers
+  @uses Primrose.Reportable
   @constructor
   **/
   Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation', 
-    Y.BaseCore,
-    [Y.Primrose.Matchers, Y.Primrose.Reporter],
+    Y.Base,
+    [Y.Primrose.Matchers, Y.Primrose.Reportable],
   {
 
     /**
@@ -16,7 +18,6 @@ YUI.add('primrose-expectation', function (Y) {
     **/
     run: function () {
       var valid = this.validate();
-
       return valid;
     },
 
@@ -47,14 +48,16 @@ YUI.add('primrose-expectation', function (Y) {
     @method validate
     **/
     validate: function () {
-      var result = this.validator.call(
+      var passed = this.validator.call(
         this, 
         this.get('subject')
       );
 
-      if (this.get('not')) result = !result;
+      if (this.get('not')) passed = !passed;
 
-      return result;
+      this.set('passed', passed);
+
+      return passed;
     }
 
   },
@@ -62,7 +65,30 @@ YUI.add('primrose-expectation', function (Y) {
     ATTRS: {
 
       /**
+      @attribute description
+      @type {String}
+      **/
+      description: {
+        getter: function () {
+          var not = this.get('not') ? 'not ' : '',
+              description;
+          
+          description = {
+            subject:  this.get('subject'),
+            not:      not,
+            matcher:  this.get('matcher')
+          };
+
+          return Y.Lang.sub(
+            'expect {subject} {not}{matcher}', 
+            description
+          );
+        }
+      },
+
+      /**
       @attribute not
+      @type {Boolean}
       **/
       not: {
         value: false
@@ -75,17 +101,20 @@ YUI.add('primrose-expectation', function (Y) {
       subject: {},
 
       /**
-      @attribute result
-      @type {any}
+      @attribute passed
+      @type {Boolean}
       **/
-      result: {}
+      passed: {
+        value: false
+      }
     }
   });
 },
 '0.0.1',
 {
   requires: [
-    'base-core',
-    'primrose-matchers'
+    'base',
+    'primrose-matchers',
+    'primrose-reportable'
   ]
 });
