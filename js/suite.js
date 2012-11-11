@@ -5,13 +5,14 @@ YUI.add('primrose-suite', function (Y) {
 
   @class Suite
   @namespace Primrose
-  @extends BaseCore
+  @extends Base
   @uses Primrose.BeforeEach
+  @uses Primrose.Reportable
   @constructor
   **/
   Y.namespace('Primrose').Suite = Y.Base.create('primrose:suite',
-    Y.BaseCore,
-    [Y.Primrose.BeforeEach, Y.Primrose.Reporter],
+    Y.Base,
+    [Y.Primrose.BeforeEach, Y.Primrose.Reportable],
   {
 
     /**
@@ -24,6 +25,9 @@ YUI.add('primrose-suite', function (Y) {
       var befores = this.get('beforeList');
 
       this.get('children').push(child);
+
+      // enable bubbling
+      child.addTarget(this);
 
       // add any beforeEach blocks to the child
       if (befores.length) child.addBefores( befores );
@@ -77,6 +81,6 @@ YUI.add('primrose-suite', function (Y) {
     'base',
     'primrose-spec',
     'primrose-before-each',
-    'primrose-reporter'
+    'primrose-reportable'
   ]
 });

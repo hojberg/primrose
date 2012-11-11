@@ -6,6 +6,8 @@ YUI.add('primrose', function (Y) {
       parentSuite,
       currentSpec;
 
+  var _reporters = [];
+
   /**
   create a new Primrose.Suite and sub suites/specs
 
@@ -52,16 +54,27 @@ YUI.add('primrose', function (Y) {
   create a new Primrose.Spec for the current suite
 
   @method it
-  @param {String} name
+  @param {String} description
   @param {Function} specification
   **/
-  Y.Primrose.it = function (name, block) {
+  Y.Primrose.it = function (description, block) {
     var spec = new Y.Primrose.Spec({ 
-      name:   name,
-      block:  block
+      description:  description,
+      block:        block
     });
 
     parentSuite.add(spec);
+  };
+
+  /**
+  add a reporter to listen for results
+
+  @method addReporter
+  @param {Reporter} reporter
+  **/
+  Y.Primrose.addReporter = function (reporter) {
+    _reporters.push(reporter);
+    reporter.observe(topSuite);
   };
 
   /**
@@ -70,6 +83,8 @@ YUI.add('primrose', function (Y) {
   @method run
   **/
   Y.Primrose.run = function () {
+    Y.log('RUNNING PRIMROSE SPECS');
+    Y.log('--------------------------');
     topSuite.run();
   };
 

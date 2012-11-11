@@ -1,18 +1,16 @@
-YUI.add('primrose-reporter', function (Y) { 
+YUI.add('primrose-reportable', function (Y) { 
 
   /**
-  A Reporter handles the results of a suite.
+  Reportable handles the results of a suite.
 
-  @class Reporter
+  @class Reportable
   @namespace Primrose
   @extends BaseCore
   @constructor
   **/
-  Y.namespace('Primrose').Reporter = Y.Base.create('primrose:reporter',
-    Y.BaseCore,
-    [],
-  {
+  var Reportable = function () {};
 
+  Reportable.prototype = {
     /**
     initialize the reporter subscriptions
 
@@ -36,49 +34,35 @@ YUI.add('primrose-reporter', function (Y) {
     report: function (executionPoint, blockType) {
       var klass       = this.name,
           direction   = executionPoint === 'before' ? '>>' : '<<',
-          name        = this.get('name')        || '',
-          description = this.get('description') || '',
-          returned    = Y.Do.originalRetVal,
-          result      = '';
+          description = this.get('description'),
+          passed      = this.get('passed'),
+          description;
 
-      if ( !Y.Lang.isUndefined( returned ) ) {
-        result = returned ? 'PASS' : 'FAIL';
+      if (Y.Lang.isUndefined( passed ) ) {
+        this.fire('report:run', {
+          direction: direction,
+          description: description
+        });
       }
-
-      this.simpleLogAdapter([
-        direction,
-        klass,
-        name,
-        description,
-        blockType,
-        result
-      ]);
-    },
-
-    /**
-    a simple Y.log adapter for rendering the report
-
-    @method simpleLogAdapter
-    @param {Array[String]} detail
-    **/
-    simpleLogAdapter: function (detail) {
-      Y.log(detail.join(' '), 'info');
+      else {
+        this.fire('report:result', {
+          description: description,
+          passed: passed
+        });
+      }
     }
 
-  },
-  {
+  };
 
-    ATTRS: {
+  Reportable.NAME = 'primrose:reportable';
 
-    }
- 
-  });
+  // export to the Primrose namespace
+  Y.namespace('Primrose').Reportable = Reportable;
 
 },
 '0.0.1',
 {
   requires: [
-    'base',
     'event-custom'
   ]
 });

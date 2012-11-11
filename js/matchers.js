@@ -15,6 +15,8 @@ YUI.add('primrose-matchers', function (Y) {
     @param {any} expected
     **/
     toBe: function (expected) {
+      this.set('matcher', 'to be ' + expected);
+
       this.validator = function (subject) {
         return subject === expected;
       }
@@ -23,13 +25,23 @@ YUI.add('primrose-matchers', function (Y) {
 
   Matchers.NAME = 'primrose:matchers';
 
+  Matchers.ATTRS = {
+    /**
+    description of the matcher
+
+    @attribute matcher
+    @type {String}
+    **/
+    matcher: {
+      value: ''
+    }
+  };
+
   // export to the Primrose namespace
   Y.namespace('Primrose').Matchers = Matchers;
 
 },
 '0.0.1',
 {
-  requires: [
-    'base-core'
-  ]
+  requires: []
 });
