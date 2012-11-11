@@ -14,6 +14,7 @@ YUI.add('primrose-log-reporter', function (Y) {
       o.after('report:enter',   this._handleEnter,  this);
       o.after('report:exit',    this._handleExit,   this);
       o.after('report:result',  this._handleResult, this);
+      o.after('report:error',   this._handleError,  this);
     },
 
     /**
@@ -54,18 +55,42 @@ YUI.add('primrose-log-reporter', function (Y) {
     _handleResult: function (ev) {
       this._report([
         ev.description,
+        '=>',
         ev.passed ? 'PASSED' : 'FAILED'
       ]);
     },
 
     /**
+    handles the `error` event
+
+    @method _handleError
+    @param {EventFacade}
+    @protected
+    **/
+    _handleError: function (ev) {
+      var ex = ev.exception;
+
+      this._report([
+        ev.description,
+        '=>',
+        ex.name + ': ',
+        ex.message
+      ], 'warn');
+
+      Y.log(ex, 'warn');
+    },
+
+    /**
     a simple Y.log adapter for rendering the report
 
-    @method simpleLogAdapter
+    @method report
     @param {Array[String]} detail
+    @param {String} level 
+      @default 'info'
     **/
-    _report: function (detail) {
-      Y.log(detail.join(' '), 'info');
+    _report: function (detail, level) {
+      level = level || 'info';
+      Y.log(detail.join(' '), level);
     }
 
   };

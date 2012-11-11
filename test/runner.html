@@ -56,6 +56,7 @@
             P.describe('render', function () {
 
               P.beforeEach(function () {
+                bar.baz();
                 subject = 43;
               });
 
@@ -66,6 +67,7 @@
           });
 
           P.it('has a user as the model', function (expect) {
+            foo.bar();
             expect(1).not().toBe(2);
           });
 

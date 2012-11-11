@@ -23,10 +23,8 @@ YUI.add('primrose-reportable', function (Y) {
       Y.Do.before( this.report, this, '_runBeforeList', this, 'enter', 'beforeEach' );
       Y.Do.before( this.report, this, '_runBeforeList', this, 'exit',  'beforeEach' );
     },
-
+  
     /**
-    handle the report subscriptions
-
     @method report
     @param {String} executionPoint
     @param {String} [blockType]
@@ -49,8 +47,21 @@ YUI.add('primrose-reportable', function (Y) {
           passed: passed
         });
       }
+    },
 
-    }
+    /**
+    Fires an error event
+
+    @method reportError
+    @param {Error} exception
+    @param {String} description
+    **/
+    reportError: function (exception, description) {
+      this.fire('report:error', {
+        description: description || this.get('description'),
+        exception: exception
+      });
+    },
 
   };
 
