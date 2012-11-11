@@ -46,21 +46,35 @@ YUI.add('primrose-spec', function (Y) {
     },
 
     /**
+    safe internal runner to keep track of exceptions
+
+    @method _exec
+    @protected
+    **/
+    _exec: function (runner, description) {
+      try {
+        runner.call(this);
+      }
+      catch (ex) {
+        this.reportError(ex, description);
+      }
+    },
+
+    /**
     execute the specification
 
     @method run
     **/
     run: function () {
-      this._runBeforeList();
+      this._exec(this._runBeforeList, 'beforeEach');
 
-      // execute the `it` block - pass in the `expect` method
-      this.get('block').call(
-        this, 
-        Y.bind(this.expect, this)
-      );
-      
-      // validate all expectations
-      Y.Array.invoke(this.get('expectations'), 'run');
+      this._exec(function () {
+        // execute the `it` block - pass in the `expect` method
+        this.get('block').call( this, Y.bind(this.expect, this) );
+
+        // validate all expectations
+        Y.Array.invoke(this.get('expectations'), 'run');
+      }, this.get('description'));
     },
 
     /**
