@@ -11,16 +11,16 @@ YUI.add('user-spec', function (Y) {
 
     var subject;
 
-    this.before(function () {
+    P.beforeEach(function () {
       subject = new Y.User({ 
         firstname: 'Simon', 
         lastname: 'Højberg' 
       });
     });
 
-    this.describe('name', function () {
-      this.it('combines first and last names', function () {
-        this.expect( subject.get('name') ).toBe( 'Simon Højberg' );
+    P.describe('name', function () {
+      P.it('combines first and last names', function (expect) {
+        expect( subject.get('name') ).toBe( 'Simon Højberg' );
       });
     });
 
@@ -31,10 +31,11 @@ YUI.add('user-spec', function (Y) {
 
 # Running all specs
 ```JavaScript
-YUI().use('user-spec', 'primrose', function (Y) {
+YUI().use('user-spec', 'primrose', 'primrose-log-reporter', function (Y) {
 
   // Set a reporter
-  Y.Primrose.reportToHTML('body');
+  Y.Primrose.addReporter(new Y.Primrose.LogReporter());
+
   // Run the specs
   Y.Primrose.run();
 
