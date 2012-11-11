@@ -5,13 +5,14 @@ YUI.add('primrose-spec', function (Y) {
 
   @class Spec
   @namespace Primrose
-  @extends BaseCore
+  @extends Base
   @uses Primrose.BeforeEach
+  @uses Primrose.Reportable
   @constructor
   **/
   Y.namespace('Primrose').Spec = Y.Base.create('primrose:spec', 
-    Y.BaseCore,
-    [Y.Primrose.BeforeEach, Y.Primrose.Reporter],
+    Y.Base,
+    [Y.Primrose.BeforeEach, Y.Primrose.Reportable],
   {
 
     /**
@@ -37,6 +38,9 @@ YUI.add('primrose-spec', function (Y) {
     add: function (expectation) {
       // add the expectation to the spec
       this.get('expectations').push(expectation);
+
+      // enable bubbling
+      expectation.addTarget(this);
 
       return expectation;
     },
@@ -76,11 +80,16 @@ YUI.add('primrose-spec', function (Y) {
     ATTRS: {
 
       /**
-      @attribute name
+      @attribute description
       @type {String}
       **/
-      name: {
-        value: ''
+      description: {
+        value: '',
+
+        // prefix the description with 'it'
+        setter: function (val) {
+          return 'it ' + val;
+        }
       },
 
       /**
@@ -118,6 +127,6 @@ YUI.add('primrose-spec', function (Y) {
     'collection',
     'primrose-expectation',
     'primrose-before-each',
-    'primrose-reporter'
+    'primrose-reportable'
   ]
 });

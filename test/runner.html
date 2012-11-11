@@ -29,11 +29,14 @@
           'primrose-matchers': {
             fullpath: '../js/matchers.js'
           },
-          'primrose-reporter': {
-            fullpath: '../js/reporter.js'
+          'primrose-reportable': {
+            fullpath: '../js/reportable.js'
+          },
+          'primrose-log-reporter': {
+            fullpath: '../js/log_reporter.js'
           }
         }
-      }).use('primrose', 'node', function (Y) {
+      }).use('primrose', 'primrose-log-reporter', 'node', function (Y) {
 
         var P = Y.Primrose;
 
@@ -73,6 +76,8 @@
           });
 
         });
+
+        Y.Primrose.addReporter(new Y.Primrose.LogReporter());
 
         Y.Primrose.run();
       });
