@@ -17,11 +17,11 @@ YUI.add('primrose-reportable', function (Y) {
     @todo intercept addBefores and inject an explicit report into beforeEach blocks
     **/
     initializer: function () {
-      Y.Do.before( this.report, this, 'run', this, 'before', 'run' );
-      Y.Do.after(  this.report, this, 'run', this, 'after',  ''    );
+      Y.Do.before( this.report, this, 'run', this, 'enter');
+      Y.Do.after(  this.report, this, 'run', this, 'exit');
 
-      Y.Do.before( this.report, this, '_runBeforeList', this, 'before', 'beforeList' );
-      Y.Do.before( this.report, this, '_runBeforeList', this, 'after',  'beforeList' );
+      Y.Do.before( this.report, this, '_runBeforeList', this, 'enter', 'beforeEach' );
+      Y.Do.before( this.report, this, '_runBeforeList', this, 'exit',  'beforeEach' );
     },
 
     /**
@@ -29,27 +29,27 @@ YUI.add('primrose-reportable', function (Y) {
 
     @method report
     @param {String} executionPoint
-    @param {String} blockType
+    @param {String} [blockType]
+    @todo split this function into smaller pieces
     **/
     report: function (executionPoint, blockType) {
       var klass       = this.name,
-          direction   = executionPoint === 'before' ? '>>' : '<<',
-          description = this.get('description'),
+          description = blockType || this.get('description'),
           passed      = this.get('passed'),
           description;
 
       if (Y.Lang.isUndefined( passed ) ) {
-        this.fire('report:run', {
-          direction: direction,
+        this.fire('report:' + executionPoint, {
           description: description
         });
       }
-      else {
+      else if (executionPoint === 'exit') {
         this.fire('report:result', {
           description: description,
           passed: passed
         });
       }
+
     }
 
   };

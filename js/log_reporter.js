@@ -11,27 +11,41 @@ YUI.add('primrose-log-reporter', function (Y) {
     @param {Object} o
     **/
     observe: function (o) {
-      o.after('report:run',     this._handleRun,    this);
+      o.after('report:enter',   this._handleEnter,  this);
+      o.after('report:exit',    this._handleExit,   this);
       o.after('report:result',  this._handleResult, this);
     },
 
     /**
-    handles the result event
+    handles the `enter` event
 
-    @method _handleResult
+    @method _handleEnter
     @param {EventFacade}
     @protected
     **/
-    _handleRun: function (ev) {
+    _handleEnter: function (ev) {
       this._report([
-        ev.direction,
-        ev.description,
-        'RUNNING'
+        '--=>',
+        ev.description
       ]);
     },
 
     /**
-    handles the result event
+    handles the `exit` event
+
+    @method _handleExit
+    @param {EventFacade}
+    @protected
+    **/
+    _handleExit: function (ev) {
+      this._report([
+        '<=--',
+        ev.description
+      ]);
+    },
+
+    /**
+    handles the `result` event
 
     @method _handleResult
     @param {EventFacade}
