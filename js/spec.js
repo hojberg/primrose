@@ -49,8 +49,11 @@ YUI.add('primrose-spec', function (Y) {
     run: function () {
       this._runBeforeList();
 
-      Y.log('IT: ' + this.get('name'), 'debug');
-      this.get('block').call(this);
+      // execute the `it` block - pass in the `expect` method
+      this.get('block').call(
+        this, 
+        Y.bind(this.expect, this)
+      );
       
       // validate all expectations
       Y.Array.invoke(this.get('expectations'), 'run');
