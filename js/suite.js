@@ -11,7 +11,7 @@ YUI.add('primrose-suite', function (Y) {
   **/
   Y.namespace('Primrose').Suite = Y.Base.create('primrose:suite',
     Y.BaseCore,
-    [Y.Primrose.BeforeEach],
+    [Y.Primrose.BeforeEach, Y.Primrose.Reporter],
   {
 
     /**
@@ -35,12 +35,8 @@ YUI.add('primrose-suite', function (Y) {
     @method run
     **/
     run: function () {
-      Y.log('>> DESCRIBE: ' + this.get('description'), 'debug');
-
       // run all children
       Y.Array.invoke(this.get('children'), 'run');
-
-      Y.log('<< DESCRIBE: ' + this.get('description'), 'debug');
     }
 
   },
@@ -80,6 +76,7 @@ YUI.add('primrose-suite', function (Y) {
   requires: [
     'base',
     'primrose-spec',
-    'primrose-before-each'
+    'primrose-before-each',
+    'primrose-reporter'
   ]
 });

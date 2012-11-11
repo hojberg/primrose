@@ -11,7 +11,7 @@ YUI.add('primrose-spec', function (Y) {
   **/
   Y.namespace('Primrose').Spec = Y.Base.create('primrose:spec', 
     Y.BaseCore,
-    [Y.Primrose.BeforeEach],
+    [Y.Primrose.BeforeEach, Y.Primrose.Reporter],
   {
 
     /**
@@ -47,15 +47,22 @@ YUI.add('primrose-spec', function (Y) {
     @method run
     **/
     run: function () {
-      // run any beforeEach blocks
+      this._runBeforeList();
+
+      // validate all expectations
+      Y.Array.invoke(this.get('expectations'), 'run');
+    },
+
+    /**
+    execute any beforeEach blocks
+
+    @method _runBeforeList
+    @protected
+    **/
+    _runBeforeList: function () {
       Y.Array.each(this.get('beforeList'), function (before) {
         before();
       });
-
-      Y.log('IT: ' + this.get('name'), 'debug');
-      
-      // validate all expectations
-      Y.Array.invoke(this.get('expectations'), 'run');
     }
 
   },
@@ -96,6 +103,7 @@ YUI.add('primrose-spec', function (Y) {
     'base',
     'collection',
     'primrose-expectation',
-    'primrose-before-each'
+    'primrose-before-each',
+    'primrose-reporter'
   ]
 });

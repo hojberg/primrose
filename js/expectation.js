@@ -8,7 +8,7 @@ YUI.add('primrose-expectation', function (Y) {
   **/
   Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation', 
     Y.BaseCore,
-    [Y.Primrose.Matchers],
+    [Y.Primrose.Matchers, Y.Primrose.Reporter],
   {
 
     /**
@@ -17,8 +17,7 @@ YUI.add('primrose-expectation', function (Y) {
     run: function () {
       var valid = this.validate();
 
-      // TODO build reporters
-      Y.log('   EXPECT: ' + (valid ? 'passed' : 'failed'), 'debug');
+      return valid;
     },
 
     /**
