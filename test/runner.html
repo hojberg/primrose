@@ -43,34 +43,32 @@
 
           P.beforeEach(function () {
             subject = 42;
-// /* ~~~ */   Y.log('beforeEach: top level');
           });
 
           P.describe('rendition', function () {
             P.it('renders an avatar', function () {
-              P.expect(subject).toBe(42);
+              this.expect(subject).toBe(42);
             });
 
             P.describe('render', function () {
 
               P.beforeEach(function () {
                 subject = 43;
-// /* ~~~ */       Y.log('beforeEach: render level');
               });
 
               P.it('is chainable', function () {
-                P.expect(subject).toBe(43);
+                this.expect(subject).toBe(43);
               });
             });
           });
 
           P.it('has a user as the model', function () {
-            P.expect(1).not().toBe(2);
+            this.expect(1).not().toBe(2);
           });
 
           P.describe('When user loads', function () {
             P.it('calls render', function () {
-              P.expect(1).toBe(1);
+              this.expect(1).toBe(1);
             });
           });
 
