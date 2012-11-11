@@ -28,6 +28,9 @@
           },
           'primrose-matchers': {
             fullpath: '../js/matchers.js'
+          },
+          'primrose-reporter': {
+            fullpath: '../js/reporter.js'
           }
         }
       }).use('primrose', 'node', function (Y) {
@@ -40,7 +43,7 @@
 
           P.beforeEach(function () {
             subject = 42;
-            Y.log('beforeEach: top level');
+// /* ~~~ */   Y.log('beforeEach: top level');
           });
 
           P.describe('rendition', function () {
@@ -52,7 +55,7 @@
 
               P.beforeEach(function () {
                 subject = 43;
-                Y.log('beforeEach: render level');
+// /* ~~~ */       Y.log('beforeEach: render level');
               });
 
               P.it('is chainable', function () {
