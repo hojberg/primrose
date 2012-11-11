@@ -55,26 +55,13 @@ YUI.add('primrose', function (Y) {
   @param {String} name
   @param {Function} specification
   **/
-  Y.Primrose.it = function (name, specification) {
+  Y.Primrose.it = function (name, block) {
     var spec = new Y.Primrose.Spec({ 
-      name: name
+      name:   name,
+      block:  block
     });
 
-    currentSpec = spec;
     parentSuite.add(spec);
-
-    specification.call(spec);
-  };
-
-  /**
-  create a new Primrose.Expectation for the current spec
-
-  @method expect
-  @param {any} subject
-  @return {Primrose.Expectation}
-  **/
-  Y.Primrose.expect = function (subject) {
-    return currentSpec.expect( subject );
   };
 
   /**
@@ -83,7 +70,7 @@ YUI.add('primrose', function (Y) {
   @method run
   **/
   Y.Primrose.run = function () {
-    return topSuite.run();
+    topSuite.run();
   };
 
 },
