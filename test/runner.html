@@ -38,41 +38,50 @@
         }
       }).use('primrose', 'primrose-log-reporter', 'node', function (Y) {
 
-        var P = Y.Primrose;
+        var P = Y.Primrose, 
+            describe = P.describe, 
+            beforeEach = P.beforeEach,
+            it = P.it;
 
-        P.describe('UserView', function () {
+        describe('User', function () {
+          it('has an avatar', function (expect) {
+            expect(1).toBe(2);
+          });
+        });
+
+        describe('UserView', function () {
 
           var subject;
 
-          P.beforeEach(function () {
+          beforeEach(function () {
             subject = 42;
           });
 
-          P.describe('rendition', function () {
-            P.it('renders an avatar', function (expect) {
+          describe('rendition', function () {
+            it('renders an avatar', function (expect) {
               expect(subject).toBe(42);
             });
 
-            P.describe('render', function () {
+            describe('render', function () {
 
-              P.beforeEach(function () {
+              beforeEach(function () {
                 bar.baz();
                 subject = 43;
               });
 
-              P.it('is chainable', function (expect) {
+              it('is chainable', function (expect) {
                 expect(subject).toBe(43);
               });
             });
           });
 
-          P.it('has a user as the model', function (expect) {
+          it('has a user as the model', function (expect) {
             foo.bar();
             expect(1).not().toBe(2);
           });
 
-          P.describe('When user loads', function () {
-            P.it('calls render', function (expect) {
+          describe('When user loads', function () {
+            it('calls render', function (expect) {
               expect(1).toBe(1);
             });
           });
