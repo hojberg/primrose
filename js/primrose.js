@@ -2,7 +2,7 @@ YUI.add('primrose', function (Y) {
 
   Y.namespace('Primrose');
 
-  var topSuite,
+  var topSuites = [],
       parentSuite,
       currentSpec;
 
@@ -26,7 +26,7 @@ YUI.add('primrose', function (Y) {
       parentSuite.add(suite);
     }
     else {
-      topSuite = suite;
+      topSuites.push(suite);
     }
 
     parentSuite = suite;
@@ -35,7 +35,12 @@ YUI.add('primrose', function (Y) {
 
     // set the suite back to the parent
     if (oldParentSuite) {
-      parentSuite = oldParentSuite;
+      if (Y.Array.indexOf(topSuites, oldParentSuite)) {
+        parentSuite = suite;
+      }
+      else {
+        parentSuite = oldParentSuite;
+      }
     }
 
   };
@@ -74,7 +79,9 @@ YUI.add('primrose', function (Y) {
   **/
   Y.Primrose.addReporter = function (reporter) {
     _reporters.push(reporter);
-    reporter.observe(topSuite);
+    Y.Array.each(topSuites, function (suite) {
+      reporter.observe(suite);
+    });
   };
 
   /**
@@ -85,7 +92,7 @@ YUI.add('primrose', function (Y) {
   Y.Primrose.run = function () {
     Y.log('RUNNING PRIMROSE SPECS');
     Y.log('--------------------------');
-    topSuite.run();
+    Y.Array.invoke(topSuites, 'run');
   };
 
 },
