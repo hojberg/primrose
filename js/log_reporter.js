@@ -5,6 +5,16 @@ YUI.add('primrose-log-reporter', function (Y) {
   LogReporter.prototype = {
 
     /**
+    indentian level
+
+    @property _level
+    @type {Integer}
+    @default 0
+    @protected
+    **/
+    _level: 0,
+
+    /**
     observes a Suite, Spec or Expectation
 
     @method observe
@@ -17,6 +27,16 @@ YUI.add('primrose-log-reporter', function (Y) {
       o.after('report:error',   this._handleError,  this);
     },
 
+    _indentionSpaces: function () {
+      var spaces = '';
+
+      for (i = 0; i < this._level; i++) {
+        spaces += '  ';
+      }
+
+      return spaces; 
+    },
+
     /**
     handles the `enter` event
 
@@ -26,9 +46,11 @@ YUI.add('primrose-log-reporter', function (Y) {
     **/
     _handleEnter: function (ev) {
       this._report([
-        '--=>',
+        this._indentionSpaces(),
         ev.description
       ]);
+
+      this._level++;
     },
 
     /**
@@ -39,10 +61,7 @@ YUI.add('primrose-log-reporter', function (Y) {
     @protected
     **/
     _handleExit: function (ev) {
-      this._report([
-        '<=--',
-        ev.description
-      ]);
+      this._level--;
     },
 
     /**
@@ -54,6 +73,7 @@ YUI.add('primrose-log-reporter', function (Y) {
     **/
     _handleResult: function (ev) {
       this._report([
+        this._indentionSpaces(),
         ev.description,
         '=>',
         ev.passed ? 'PASSED' : 'FAILED'
@@ -71,13 +91,14 @@ YUI.add('primrose-log-reporter', function (Y) {
       var ex = ev.exception;
 
       this._report([
+        this._indentionSpaces(),
         ev.description,
         '=>',
         ex.name + ': ',
         ex.message
       ], 'warn');
 
-      Y.log(ex, 'warn');
+      //Y.log(ex, 'warn');
     },
 
     /**
