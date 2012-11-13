@@ -3,7 +3,7 @@ YUI.add('primrose', function (Y) {
   Y.namespace('Primrose');
 
   var topSuites = [],
-      parentSuite,
+      parent,
       currentSpec;
 
   var _reporters = [];
@@ -15,31 +15,31 @@ YUI.add('primrose', function (Y) {
   @todo OMG this code is badly name
   **/
   Y.Primrose.describe = function (description, specs) {
-    var oldParentSuite, suite;
+    var oldParent, suite;
     
     suite = new Y.Primrose.Suite({
       description: description
     });
 
-    if (parentSuite) {
-      oldParentSuite = parentSuite;
-      parentSuite.add(suite);
+    if (parent) {
+      oldParent = parent;
+      parent.add(suite);
     }
     else {
       topSuites.push(suite);
     }
 
-    parentSuite = suite;
+    parent = suite;
 
     specs.call(suite);
 
     // set the suite back to the parent
-    if (oldParentSuite) {
-      if (Y.Array.indexOf(topSuites, oldParentSuite)) {
-        parentSuite = suite;
+    if (!oldParent) {
+      if (Y.Array.indexOf(topSuites, parent) !== -1) {
+        parent = null;
       }
       else {
-        parentSuite = oldParentSuite;
+        parent = oldParent;
       }
     }
 
@@ -52,7 +52,11 @@ YUI.add('primrose', function (Y) {
   @param {Function} before
   **/
   Y.Primrose.beforeEach = function (before) {
-    parentSuite.addBefores([before]);
+    if (!parent) {
+      throw new Error('"beforeEach" was defined out side of a `describe`');
+    }
+
+    parent.addBefores([before]);
   };
 
   /**
@@ -63,12 +67,20 @@ YUI.add('primrose', function (Y) {
   @param {Function} specification
   **/
   Y.Primrose.it = function (description, block) {
+    if (!parent) {
+      throw new Error([
+        '"it', 
+        description + '"', 
+        'was defined out side of a `describe`'
+      ].join(' '));
+    }
+
     var spec = new Y.Primrose.Spec({ 
       description:  description,
       block:        block
     });
 
-    parentSuite.add(spec);
+    parent.add(spec);
   };
 
   /**
