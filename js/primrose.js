@@ -12,7 +12,6 @@ YUI.add('primrose', function (Y) {
   create a new Primrose.Suite and sub suites/specs
 
   @method describe
-  @todo OMG this code is badly name
   **/
   Y.Primrose.describe = function (description, specs) {
     var oldParent, suite;
@@ -29,11 +28,13 @@ YUI.add('primrose', function (Y) {
       topSuites.push(suite);
     }
 
+    // specs will be added to the parent
     parent = suite;
 
+    // add specs to suite
     specs.call(suite);
 
-    // set the suite back to the parent
+    // move out a step again
     if (!oldParent) {
       if (Y.Array.indexOf(topSuites, parent) !== -1) {
         parent = null;
