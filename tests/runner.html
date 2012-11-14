@@ -3,7 +3,7 @@
 <html lang='en'>
 
   <head>
-    <title>Primrose experiments</title>
+    <title>Primrose units</title>
   </head>
 
   <body>
@@ -34,81 +34,29 @@
           },
           'primrose-log-reporter': {
             fullpath: '../js/log_reporter.js'
+          },
+
+          // ----- tests ----- //
+          'primrose-suite-test': {
+            fullpath: 'units/suite_test.js'
+          },
+          'primrose-spec-test': {
+            fullpath: 'units/spec_test.js'
           }
         }
-      }).use('primrose', 'primrose-log-reporter', 'node', function (Y) {
+        }).use('primrose-suite-test', 'primrose-spec-test', 'test', function (Y) {
 
-        var P = Y.Primrose, 
-            describe = P.describe, 
-            beforeEach = P.beforeEach,
-            it = P.it;
-
-        describe('Matchers', function () {
-          describe('toBe', function () {
-            it('asserts simple matches', function (expect) {
-              expect( 1 ).toBe( 1 );
-              expect( 1 ).not().toBe( 2 );
-            });
-          });
-
-          describe('toBeTypeof', function () {
-            it('assets the type', function (expect) {
-              expect( "mystr" ).toBeTypeof( "string" );
-            });
-          });
-
-          describe('toMatch', function () {
-            it('matches a regex', function (expect) {
-              expect( 'foo' ).toMatch( /foo/ );
-              expect( 'bar' ).not().toMatch( /foo/ );
-            });
-          });
-
-          describe('toBeDefined', function () {
-            it('checks if defined', function (expect) {
-              var foo = 1;
-
-              expect( foo ).toBeDefined();
-              expect( undefined ).not().toBeDefined();
-            });
-          });
-
-          describe('toBeUndefined', function () {
-            it('checks if undefined', function (expect) {
-              var bar = 1;
-
-              expect( undefined ).toBeUndefined();
-              expect( bar ).not().toBeUndefined();
-            });
-          });
-
-          describe('toBeNaN', function () {
-            it('checks if NaN', function (expect) {
-              expect( 'str' ).toBeNaN();
-              expect( 1 ).not().toBeNaN();
-            });
-          });
-          
-          describe('toContain', function () {
-            describe('with an array', function () {
-              it('checks if it contains the element', function (expect) {
-                expect( ['foo', 'bar'] ).toInclude('bar');
-                expect( ['foo', 'bar'] ).not().toInclude('baz');
-              });
-            });
-
-            describe('with a string', function () {
-              it('checks if it contains the substring', function (expect) {
-                expect( 'foobar' ).toInclude('bar');
-                expect( 'foobar' ).not().toInclude('baz');
-              });
-            });
-          });
+        var suite = new YUITest.Suite({
+          name: 'Primrose Test Suite'
         });
 
-        Y.Primrose.addReporter(new Y.Primrose.LogReporter());
+        suite.add(Y.Primrose.SuiteTest);
+        suite.add(Y.Primrose.SpecTest);
 
-        Y.Primrose.run();
+        YUITest.TestRunner.add(suite);
+
+        //run all tests
+        YUITest.TestRunner.run();
       });
     </script>
   </body>
