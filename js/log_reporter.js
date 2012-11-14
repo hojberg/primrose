@@ -74,9 +74,8 @@ YUI.add('primrose-log-reporter', function (Y) {
     _handleResult: function (ev) {
       this._report([
         this._indentionSpaces(),
+        ev.passed ? '✔' : '✖'
         ev.description,
-        '=>',
-        ev.passed ? 'PASSED' : 'FAILED'
       ]);
     },
 
