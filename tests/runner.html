@@ -42,9 +42,12 @@
           },
           'primrose-spec-test': {
             fullpath: 'units/spec_test.js'
+          },
+          'primrose-expectation-test': {
+            fullpath: 'units/expectation_test.js'
           }
         }
-        }).use('primrose-suite-test', 'primrose-spec-test', 'test', function (Y) {
+        }).use('primrose-suite-test', 'primrose-spec-test', 'primrose-expectation-test', 'test', function (Y) {
 
         var suite = new YUITest.Suite({
           name: 'Primrose Test Suite'
@@ -52,6 +55,7 @@
 
         suite.add(Y.Primrose.SuiteTest);
         suite.add(Y.Primrose.SpecTest);
+        suite.add(Y.Primrose.ExpectationTest);
 
         YUITest.TestRunner.add(suite);
 

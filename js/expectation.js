@@ -17,8 +17,7 @@ YUI.add('primrose-expectation', function (Y) {
     @method run
     **/
     run: function () {
-      var valid = this.validate();
-      return valid;
+      return this.validate();
     },
 
     /**
