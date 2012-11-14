@@ -43,45 +43,6 @@
             beforeEach = P.beforeEach,
             it = P.it;
 
-        describe('UserView', function () {
-
-          var subject;
-
-          beforeEach(function () {
-            subject = 42;
-          });
-
-          it('has a user as the model', function (expect) {
-            foo.bar();
-            expect(1).not().toBe(2);
-          });
-
-          describe('rendition', function () {
-            it('renders an avatar', function (expect) {
-              expect(subject).toBe(42);
-            });
-
-            describe('render', function () {
-
-              beforeEach(function () {
-                bar.baz();
-                subject = 43;
-              });
-
-              it('is chainable', function (expect) {
-                expect(subject).toBe(43);
-              });
-            });
-          });
-
-          describe('When user loads', function () {
-            it('calls render', function (expect) {
-              expect(1).toBe(1);
-            });
-          });
-
-        });
-
         describe('Matchers', function () {
           describe('toBe', function () {
             it('asserts simple matches', function (expect) {
