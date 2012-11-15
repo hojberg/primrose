@@ -12,42 +12,42 @@
       YUI({
         modules: {
           'primrose': {
-            fullpath: '../js/primrose.js'
+            fullpath: '../../js/primrose.js'
           },
           'primrose-suite': {
-            fullpath: '../js/suite.js'
+            fullpath: '../../js/suite.js'
           },
           'primrose-before-each': {
-            fullpath: '../js/before_each.js'
+            fullpath: '../../js/before_each.js'
           },
           'primrose-spec': {
-            fullpath: '../js/spec.js'
+            fullpath: '../../js/spec.js'
           },
           'primrose-expectation': {
-            fullpath: '../js/expectation.js'
+            fullpath: '../../js/expectation.js'
           },
           'primrose-matchers': {
-            fullpath: '../js/matchers.js'
+            fullpath: '../../js/matchers.js'
           },
           'primrose-reportable': {
-            fullpath: '../js/reportable.js'
+            fullpath: '../../js/reportable.js'
           },
           'primrose-log-reporter': {
-            fullpath: '../js/log_reporter.js'
+            fullpath: '../../js/log_reporter.js'
           },
 
           // ----- tests ----- //
           'primrose-suite-test': {
-            fullpath: 'units/suite_test.js'
+            fullpath: 'js/suite_test.js'
           },
           'primrose-spec-test': {
-            fullpath: 'units/spec_test.js'
+            fullpath: 'js/spec_test.js'
           },
           'primrose-expectation-test': {
-            fullpath: 'units/expectation_test.js'
+            fullpath: 'js/expectation_test.js'
           }
         }
-        }).use('primrose-suite-test', 'primrose-spec-test', 'primrose-expectation-test', 'test', function (Y) {
+      }).use('primrose-suite-test', 'primrose-spec-test', 'primrose-expectation-test', 'test', function (Y) {
 
         var suite = new YUITest.Suite({
           name: 'Primrose Test Suite'
