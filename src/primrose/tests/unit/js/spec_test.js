@@ -70,6 +70,6 @@ YUI.add('primrose-spec-test', function (Y) {
 {
   requires: [
     'test',
-    'primrose-suite'
+    'gallery-primrose'
   ]
 });

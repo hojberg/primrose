@@ -1,7 +1,0 @@
-{
-    "gallery-primrose": {
-        "requires": [
-            "yui-base"
-        ]
-    }
-}
