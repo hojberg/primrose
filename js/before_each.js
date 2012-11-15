@@ -8,7 +8,7 @@ YUI.add('primrose-before-each', function (Y) {
   @extends BaseCore
   @constructor
   **/
-  Y.namespace('Primrose').BeforeEach = Y.Base.create('primrose:beforeEach', 
+  Y.namespace('Primrose').BeforeEach = Y.Base.create('primrose:beforeEach',
     Y.BaseCore,
     [],
   {

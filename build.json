@@ -1,0 +1,10 @@
+{
+    "name": "gallery-primrose",
+    "builds": {
+        "gallery-primrose": {
+            "jsfiles": [
+                "js/primrose.js"
+            ]
+        }
+    }
+}

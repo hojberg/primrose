@@ -8,7 +8,7 @@ YUI.add('primrose-expectation', function (Y) {
   @uses Primrose.Reportable
   @constructor
   **/
-  Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation', 
+  Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
     Y.Base,
     [Y.Primrose.Matchers, Y.Primrose.Reportable],
   {
@@ -34,10 +34,11 @@ YUI.add('primrose-expectation', function (Y) {
     to be overwritten by the matcher
 
     @method validator
+    @param {any} subject
     @return {Boolean}
     @default false
     **/
-    validator: function (subject) {
+    validator: function (/* subject */) {
       return false;
     },
 
@@ -48,11 +49,13 @@ YUI.add('primrose-expectation', function (Y) {
     **/
     validate: function () {
       var passed = this.validator.call(
-        this, 
+        this,
         this.get('subject')
       );
 
-      if (this.get('not')) passed = !passed;
+      if (this.get('not')) {
+        passed = !passed;
+      }
 
       this.set('passed', passed);
 
@@ -79,7 +82,7 @@ YUI.add('primrose-expectation', function (Y) {
           };
 
           return Y.Lang.sub(
-            'expect {subject} {not}{matcher}', 
+            'expect {subject} {not}{matcher}',
             description
           );
         }
@@ -96,7 +99,7 @@ YUI.add('primrose-expectation', function (Y) {
       /**
       @attribute subject
       @type {any}
-      **/ 
+      **/
       subject: {},
 
       /**

@@ -1,4 +1,4 @@
-YUI.add('primrose-spec', function (Y) { 
+YUI.add('primrose-spec', function (Y) {
 
   /**
   A Spec defines an `it` block
@@ -10,7 +10,7 @@ YUI.add('primrose-spec', function (Y) {
   @uses Primrose.Reportable
   @constructor
   **/
-  Y.namespace('Primrose').Spec = Y.Base.create('primrose:spec', 
+  Y.namespace('Primrose').Spec = Y.Base.create('primrose:spec',
     Y.Base,
     [Y.Primrose.BeforeEach, Y.Primrose.Reportable],
   {
@@ -29,7 +29,7 @@ YUI.add('primrose-spec', function (Y) {
     },
 
     /**
-    add an expectation to the spec 
+    add an expectation to the spec
 
     @method add
     @param {Primrose.Expectation} expectation

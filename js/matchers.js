@@ -1,14 +1,15 @@
 YUI.add('primrose-matchers', function (Y) {
 
   var Lang    = Y.Lang,
-      YArray  = Y.Array;
+      YArray  = Y.Array,
+      Matchers;
 
   /**
   @class Matchers
   @namespace Primrose
   @constructor
   **/
-  var Matchers = function () {};
+  Matchers = function () {};
 
   Matchers.prototype = {
 
@@ -34,11 +35,11 @@ YUI.add('primrose-matchers', function (Y) {
     
     /**
     @method toMatch
-    @param {RegExp}
+    @param {RegExp} expected
     **/
     toMatch: function (expected) {
       this._match('to match ' + expected, function (subject) {
-        return expected.test(subject);;
+        return expected.test(subject);
       });
     },
 
