@@ -1,4 +1,4 @@
-YUI.add('primrose-spec-test', function (Y) {
+YUI.add('primrose-expectation-test', function (Y) {
 
   Y.namespace('Primrose').ExpectationTest = new YUITest.TestCase({
 

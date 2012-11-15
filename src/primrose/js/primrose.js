@@ -99,7 +99,16 @@ run all the suites
 @method run
 **/
 Y.Primrose.run = function () {
-  Y.log('RUNNING PRIMROSE SPECS');
-  Y.log('--------------------------');
+  var startTime = new Date(),
+      duration;
+
+  Y.message('Running Primrose specs');
+  Y.message('--------------------------');
+
   Y.Array.invoke(topSuites, 'run');
+  
+  duration = new Date() - startTime;
+
+  Y.message('--------------------------');
+  Y.message('Completed Primrose specs in: ' + duration + 'ms');
 };

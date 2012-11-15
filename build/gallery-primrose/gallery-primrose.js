@@ -101,7 +101,18 @@ run all the suites
 @method run
 **/
 Y.Primrose.run = function () {
+  var startTime = new Date(),
+      duration;
+
+  Y.message('Running Primrose specs');
+  Y.message('--------------------------');
+
   Y.Array.invoke(topSuites, 'run');
+  
+  duration = new Date() - startTime;
+
+  Y.message('--------------------------');
+  Y.message('Completed Primrose specs in: ' + duration + 'ms');
 };
 (function () {
 
@@ -731,6 +742,7 @@ Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
 
     _report: function (detail, level) {
       level = level || 'info';
+      Y.message(detail.join(' '), level);
     }
 
   };

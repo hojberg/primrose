@@ -99,7 +99,7 @@
 
     _report: function (detail, level) {
       level = level || 'info';
-      Y.log(detail.join(' '), level);
+      Y.message(detail.join(' '), level);
     }
 
   };
