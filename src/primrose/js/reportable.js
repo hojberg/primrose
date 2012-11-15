@@ -1,4 +1,4 @@
-YUI.add('primrose-reportable', function (Y) {
+(function () {
 
   /**
   Reportable handles the results of a suite.
@@ -19,7 +19,7 @@ YUI.add('primrose-reportable', function (Y) {
       Y.Do.before( this.report, this, '_runBeforeList', this, 'enter', 'beforeEach' );
       Y.Do.before( this.report, this, '_runBeforeList', this, 'exit',  'beforeEach' );
     },
-  
+
     /**
     @method report
     @param {String} executionPoint
@@ -64,10 +64,4 @@ YUI.add('primrose-reportable', function (Y) {
   // export to the Primrose namespace
   Y.namespace('Primrose').Reportable = Reportable;
 
-},
-'0.0.1',
-{
-  requires: [
-    'event-custom'
-  ]
-});
+}());

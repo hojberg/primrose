@@ -11,32 +11,11 @@
     <script>
       YUI({
         modules: {
-          'primrose': {
-            fullpath: '../js/primrose.js'
-          },
-          'primrose-suite': {
-            fullpath: '../js/suite.js'
-          },
-          'primrose-before-each': {
-            fullpath: '../js/before_each.js'
-          },
-          'primrose-spec': {
-            fullpath: '../js/spec.js'
-          },
-          'primrose-expectation': {
-            fullpath: '../js/expectation.js'
-          },
-          'primrose-matchers': {
-            fullpath: '../js/matchers.js'
-          },
-          'primrose-reportable': {
-            fullpath: '../js/reportable.js'
-          },
-          'primrose-log-reporter': {
-            fullpath: '../js/log_reporter.js'
+          'gallery-primrose': {
+            fullpath: '../../../build/gallery-primrose/gallery-primrose.js'
           }
         }
-      }).use('primrose', 'primrose-log-reporter', 'node', function (Y) {
+      }).use('gallery-primrose', 'node', function (Y) {
 
         var P = Y.Primrose, 
             describe = P.describe, 
