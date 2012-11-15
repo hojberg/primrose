@@ -1,4 +1,4 @@
-YUI.add('primrose-suite', function (Y) { 
+YUI.add('primrose-suite', function (Y) {
 
   /**
   A Suite defines a `describe` block
@@ -30,7 +30,9 @@ YUI.add('primrose-suite', function (Y) {
       child.addTarget(this);
 
       // add any beforeEach blocks to the child
-      if (befores.length) child.addBefores( befores );
+      if (befores.length) {
+        child.addBefores( befores );
+      }
     },
 
     /**

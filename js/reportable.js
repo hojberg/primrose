@@ -1,4 +1,4 @@
-YUI.add('primrose-reportable', function (Y) { 
+YUI.add('primrose-reportable', function (Y) {
 
   /**
   Reportable handles the results of a suite.
@@ -11,11 +11,7 @@ YUI.add('primrose-reportable', function (Y) {
   var Reportable = function () {};
 
   Reportable.prototype = {
-    /**
-    initialize the reporter subscriptions
 
-    @todo intercept addBefores and inject an explicit report into beforeEach blocks
-    **/
     initializer: function () {
       Y.Do.before( this.report, this, 'run', this, 'enter');
       Y.Do.after(  this.report, this, 'run', this, 'exit');
@@ -31,10 +27,8 @@ YUI.add('primrose-reportable', function (Y) {
     @todo split this function into smaller pieces
     **/
     report: function (executionPoint, blockType) {
-      var klass       = this.name,
-          description = blockType || this.get('description'),
-          passed      = this.get('passed'),
-          description;
+      var description = blockType || this.get('description'),
+          passed      = this.get('passed');
 
       if (Y.Lang.isUndefined( passed ) ) {
         this.fire('report:' + executionPoint, {
@@ -61,7 +55,7 @@ YUI.add('primrose-reportable', function (Y) {
         description: description || this.get('description'),
         exception: exception
       });
-    },
+    }
 
   };
 

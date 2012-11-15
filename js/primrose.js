@@ -1,12 +1,10 @@
-YUI.add('primrose', function (Y) { 
+YUI.add('primrose', function (Y) {
 
   Y.namespace('Primrose');
 
   var topSuites = [],
       parent,
-      currentSpec;
-
-  var _reporters = [];
+      _reporters = [];
 
   /**
   create a new Primrose.Suite and sub suites/specs
@@ -70,13 +68,13 @@ YUI.add('primrose', function (Y) {
   Y.Primrose.it = function (description, block) {
     if (!parent) {
       throw new Error([
-        '"it', 
-        description + '"', 
+        '"it',
+        description + '"',
         'was defined out side of a `describe`'
       ].join(' '));
     }
 
-    var spec = new Y.Primrose.Spec({ 
+    var spec = new Y.Primrose.Spec({
       description:  description,
       block:        block
     });
@@ -112,7 +110,7 @@ YUI.add('primrose', function (Y) {
 '0.0.1',
 {
   requires: [
-    'primrose-spec', 
+    'primrose-spec',
     'primrose-suite',
     'primrose-expectation'
   ]

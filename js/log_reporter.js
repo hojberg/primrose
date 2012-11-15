@@ -5,7 +5,7 @@ YUI.add('primrose-log-reporter', function (Y) {
   LogReporter.prototype = {
 
     /**
-    indentian level
+    indent level
 
     @property _level
     @type {Integer}
@@ -34,14 +34,14 @@ YUI.add('primrose-log-reporter', function (Y) {
         spaces += '  ';
       }
 
-      return spaces; 
+      return spaces;
     },
 
     /**
     handles the `enter` event
 
     @method _handleEnter
-    @param {EventFacade}
+    @param {EventFacade} ev
     @protected
     **/
     _handleEnter: function (ev) {
@@ -57,10 +57,10 @@ YUI.add('primrose-log-reporter', function (Y) {
     handles the `exit` event
 
     @method _handleExit
-    @param {EventFacade}
+    @param {EventFacade} ev
     @protected
     **/
-    _handleExit: function (ev) {
+    _handleExit: function (/* ev */) {
       this._level--;
     },
 
@@ -68,14 +68,14 @@ YUI.add('primrose-log-reporter', function (Y) {
     handles the `result` event
 
     @method _handleResult
-    @param {EventFacade}
+    @param {EventFacade} ev
     @protected
     **/
     _handleResult: function (ev) {
       this._report([
         this._indentionSpaces(),
         ev.passed ? '✔' : '✖',
-        ev.description,
+        ev.description
       ]);
     },
 
@@ -83,7 +83,7 @@ YUI.add('primrose-log-reporter', function (Y) {
     handles the `error` event
 
     @method _handleError
-    @param {EventFacade}
+    @param {EventFacade} ev
     @protected
     **/
     _handleError: function (ev) {
@@ -105,7 +105,7 @@ YUI.add('primrose-log-reporter', function (Y) {
 
     @method report
     @param {Array[String]} detail
-    @param {String} level 
+    @param {String} level
       @default 'info'
     **/
     _report: function (detail, level) {
