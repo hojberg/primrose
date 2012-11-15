@@ -41,6 +41,6 @@ YUI.add('primrose-suite-test', function (Y) {
 {
   requires: [
     'test',
-    'primrose-suite'
+    'gallery-primrose'
   ]
 });

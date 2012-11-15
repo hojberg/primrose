@@ -1,88 +1,75 @@
-YUI.add('primrose-suite', function (Y) {
+/**
+A Suite defines a `describe` block
+
+@class Suite
+@namespace Primrose
+@extends Base
+@uses Primrose.BeforeEach
+@uses Primrose.Reportable
+@constructor
+**/
+Y.namespace('Primrose').Suite = Y.Base.create('primrose:suite',
+  Y.Base,
+  [Y.Primrose.BeforeEach, Y.Primrose.Reportable],
+{
 
   /**
-  A Suite defines a `describe` block
+  add a spec or a suite to the suite
 
-  @class Suite
-  @namespace Primrose
-  @extends Base
-  @uses Primrose.BeforeEach
-  @uses Primrose.Reportable
-  @constructor
+  @method add
+  @param {Primrose.Spec|Primrose.Suite} child
   **/
-  Y.namespace('Primrose').Suite = Y.Base.create('primrose:suite',
-    Y.Base,
-    [Y.Primrose.BeforeEach, Y.Primrose.Reportable],
-  {
+  add: function (child) {
+    var befores = this.get('beforeList');
+
+    this.get('children').push(child);
+
+    // enable bubbling
+    child.addTarget(this);
+
+    // add any beforeEach blocks to the child
+    if (befores.length) {
+      child.addBefores( befores );
+    }
+  },
+
+  /**
+  run the suite and children
+
+  @method run
+  **/
+  run: function () {
+    // run all children
+    Y.Array.invoke(this.get('children'), 'run');
+  }
+
+},
+{
+
+  ATTRS: {
 
     /**
-    add a spec or a suite to the suite
-
-    @method add
-    @param {Primrose.Spec|Primrose.Suite} child
+    @attribute description
+    @type {String}
     **/
-    add: function (child) {
-      var befores = this.get('beforeList');
+    description: {},
 
-      this.get('children').push(child);
-
-      // enable bubbling
-      child.addTarget(this);
-
-      // add any beforeEach blocks to the child
-      if (befores.length) {
-        child.addBefores( befores );
-      }
+    /**
+    @attribute children
+    @type {Array[Primrose.Spec|Primrose.Suite]}
+    **/
+    children: {
+      value: []
     },
 
     /**
-    run the suite and children
-
-    @method run
+    @attribute beforeList
+    @type {Array[Function]}
     **/
-    run: function () {
-      // run all children
-      Y.Array.invoke(this.get('children'), 'run');
+    beforeList: {
+      value: []
     }
 
-  },
-  {
+  }
 
-    ATTRS: {
-
-      /**
-      @attribute description
-      @type {String}
-      **/
-      description: {},
-
-      /**
-      @attribute children
-      @type {Array[Primrose.Spec|Primrose.Suite]}
-      **/
-      children: {
-        value: []
-      },
-
-      /**
-      @attribute beforeList
-      @type {Array[Function]}
-      **/
-      beforeList: {
-        value: []
-      }
-
-    }
- 
-  });
-
-},
-'0.0.1',
-{
-  requires: [
-    'base',
-    'primrose-spec',
-    'primrose-before-each',
-    'primrose-reportable'
-  ]
 });

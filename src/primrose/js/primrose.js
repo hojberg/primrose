@@ -1,117 +1,105 @@
-YUI.add('primrose', function (Y) {
+Y.namespace('Primrose');
 
-  Y.namespace('Primrose');
+var topSuites = [],
+    parent,
+    _reporters = [];
 
-  var topSuites = [],
-      parent,
-      _reporters = [];
+/**
+create a new Primrose.Suite and sub suites/specs
 
-  /**
-  create a new Primrose.Suite and sub suites/specs
+@method describe
+**/
+Y.Primrose.describe = function (description, specs) {
+  var oldParent, suite;
+  
+  suite = new Y.Primrose.Suite({
+    description: description
+  });
 
-  @method describe
-  **/
-  Y.Primrose.describe = function (description, specs) {
-    var oldParent, suite;
-    
-    suite = new Y.Primrose.Suite({
-      description: description
-    });
+  if (parent) {
+    oldParent = parent;
+    parent.add(suite);
+  }
+  else {
+    topSuites.push(suite);
+  }
 
-    if (parent) {
-      oldParent = parent;
-      parent.add(suite);
+  // specs will be added to the parent
+  parent = suite;
+
+  // add specs to suite
+  specs.call(suite);
+
+  // move out a step again
+  if (!oldParent) {
+    if (Y.Array.indexOf(topSuites, parent) !== -1) {
+      parent = null;
     }
     else {
-      topSuites.push(suite);
+      parent = oldParent;
     }
+  }
 
-    // specs will be added to the parent
-    parent = suite;
+};
 
-    // add specs to suite
-    specs.call(suite);
+/**
+add a block to run before each spec in the current describe subtree
 
-    // move out a step again
-    if (!oldParent) {
-      if (Y.Array.indexOf(topSuites, parent) !== -1) {
-        parent = null;
-      }
-      else {
-        parent = oldParent;
-      }
-    }
+@method beforeEach
+@param {Function} before
+**/
+Y.Primrose.beforeEach = function (before) {
+  if (!parent) {
+    throw new Error('"beforeEach" was defined out side of a `describe`');
+  }
 
-  };
+  parent.addBefores([before]);
+};
 
-  /**
-  add a block to run before each spec in the current describe subtree
+/**
+create a new Primrose.Spec for the current suite
 
-  @method beforeEach
-  @param {Function} before
-  **/
-  Y.Primrose.beforeEach = function (before) {
-    if (!parent) {
-      throw new Error('"beforeEach" was defined out side of a `describe`');
-    }
+@method it
+@param {String} description
+@param {Function} specification
+**/
+Y.Primrose.it = function (description, block) {
+  if (!parent) {
+    throw new Error([
+      '"it',
+      description + '"',
+      'was defined out side of a `describe`'
+    ].join(' '));
+  }
 
-    parent.addBefores([before]);
-  };
+  var spec = new Y.Primrose.Spec({
+    description:  description,
+    block:        block
+  });
 
-  /**
-  create a new Primrose.Spec for the current suite
+  parent.add(spec);
+};
 
-  @method it
-  @param {String} description
-  @param {Function} specification
-  **/
-  Y.Primrose.it = function (description, block) {
-    if (!parent) {
-      throw new Error([
-        '"it',
-        description + '"',
-        'was defined out side of a `describe`'
-      ].join(' '));
-    }
+/**
+add a reporter to listen for results
 
-    var spec = new Y.Primrose.Spec({
-      description:  description,
-      block:        block
-    });
+@method addReporter
+@param {Reporter} reporter
+**/
+Y.Primrose.addReporter = function (reporter) {
+  _reporters.push(reporter);
+  Y.Array.each(topSuites, function (suite) {
+    reporter.observe(suite);
+  });
+};
 
-    parent.add(spec);
-  };
+/**
+run all the suites
 
-  /**
-  add a reporter to listen for results
-
-  @method addReporter
-  @param {Reporter} reporter
-  **/
-  Y.Primrose.addReporter = function (reporter) {
-    _reporters.push(reporter);
-    Y.Array.each(topSuites, function (suite) {
-      reporter.observe(suite);
-    });
-  };
-
-  /**
-  run all the suites
-
-  @method run
-  **/
-  Y.Primrose.run = function () {
-    Y.log('RUNNING PRIMROSE SPECS');
-    Y.log('--------------------------');
-    Y.Array.invoke(topSuites, 'run');
-  };
-
-},
-'0.0.1',
-{
-  requires: [
-    'primrose-spec',
-    'primrose-suite',
-    'primrose-expectation'
-  ]
-});
+@method run
+**/
+Y.Primrose.run = function () {
+  Y.log('RUNNING PRIMROSE SPECS');
+  Y.log('--------------------------');
+  Y.Array.invoke(topSuites, 'run');
+};

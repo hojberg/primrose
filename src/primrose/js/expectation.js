@@ -1,122 +1,111 @@
-YUI.add('primrose-expectation', function (Y) {
+/**
+@class Expectation
+@namespace Primrose
+@extends Base
+@uses Primrose.Matchers
+@uses Primrose.Reportable
+@constructor
+**/
+Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
+  Y.Base,
+  [Y.Primrose.Matchers, Y.Primrose.Reportable],
+{
 
   /**
-  @class Expectation
-  @namespace Primrose
-  @extends Base
-  @uses Primrose.Matchers
-  @uses Primrose.Reportable
-  @constructor
+  @method run
   **/
-  Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
-    Y.Base,
-    [Y.Primrose.Matchers, Y.Primrose.Reportable],
-  {
-
-    /**
-    @method run
-    **/
-    run: function () {
-      return this.validate();
-    },
-
-    /**
-    reverse the validation
-
-    @method not
-    **/
-    not: function () {
-      this.set('not', true);
-      return this;
-    },
-
-    /**
-    to be overwritten by the matcher
-
-    @method validator
-    @param {any} subject
-    @return {Boolean}
-    @default false
-    **/
-    validator: function (/* subject */) {
-      return false;
-    },
-
-    /**
-    validate the matcher
-
-    @method validate
-    **/
-    validate: function () {
-      var passed = this.validator.call(
-        this,
-        this.get('subject')
-      );
-
-      if (this.get('not')) {
-        passed = !passed;
-      }
-
-      this.set('passed', passed);
-
-      return passed;
-    }
-
+  run: function () {
+    return this.validate();
   },
-  {
-    ATTRS: {
 
-      /**
-      @attribute description
-      @type {String}
-      **/
-      description: {
-        getter: function () {
-          var not = this.get('not') ? 'not ' : '',
-              description;
-          
-          description = {
-            subject:  this.get('subject'),
-            not:      not,
-            matcher:  this.get('matcher')
-          };
+  /**
+  reverse the validation
 
-          return Y.Lang.sub(
-            'expect {subject} {not}{matcher}',
-            description
-          );
-        }
-      },
+  @method not
+  **/
+  not: function () {
+    this.set('not', true);
+    return this;
+  },
 
-      /**
-      @attribute not
-      @type {Boolean}
-      **/
-      not: {
-        value: false
-      },
+  /**
+  to be overwritten by the matcher
 
-      /**
-      @attribute subject
-      @type {any}
-      **/
-      subject: {},
+  @method validator
+  @param {any} subject
+  @return {Boolean}
+  @default false
+  **/
+  validator: function (/* subject */) {
+    return false;
+  },
 
-      /**
-      @attribute passed
-      @type {Boolean}
-      **/
-      passed: {
-        value: false
-      }
+  /**
+  validate the matcher
+
+  @method validate
+  **/
+  validate: function () {
+    var passed = this.validator.call(
+      this,
+      this.get('subject')
+    );
+
+    if (this.get('not')) {
+      passed = !passed;
     }
-  });
+
+    this.set('passed', passed);
+
+    return passed;
+  }
+
 },
-'0.0.1',
 {
-  requires: [
-    'base',
-    'primrose-matchers',
-    'primrose-reportable'
-  ]
+  ATTRS: {
+
+    /**
+    @attribute description
+    @type {String}
+    **/
+    description: {
+      getter: function () {
+        var not = this.get('not') ? 'not ' : '',
+            description;
+        
+        description = {
+          subject:  this.get('subject'),
+          not:      not,
+          matcher:  this.get('matcher')
+        };
+
+        return Y.Lang.sub(
+          'expect {subject} {not}{matcher}',
+          description
+        );
+      }
+    },
+
+    /**
+    @attribute not
+    @type {Boolean}
+    **/
+    not: {
+      value: false
+    },
+
+    /**
+    @attribute subject
+    @type {any}
+    **/
+    subject: {},
+
+    /**
+    @attribute passed
+    @type {Boolean}
+    **/
+    passed: {
+      value: false
+    }
+  }
 });

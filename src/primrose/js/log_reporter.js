@@ -1,5 +1,4 @@
-YUI.add('primrose-log-reporter', function (Y) {
-
+(function () {
   var LogReporter = function () {};
 
   LogReporter.prototype = {
@@ -96,18 +95,8 @@ YUI.add('primrose-log-reporter', function (Y) {
         ex.name + ': ',
         ex.message
       ], 'warn');
-
-      //Y.log(ex, 'warn');
     },
 
-    /**
-    a simple Y.log adapter for rendering the report
-
-    @method report
-    @param {Array[String]} detail
-    @param {String} level
-      @default 'info'
-    **/
     _report: function (detail, level) {
       level = level || 'info';
       Y.log(detail.join(' '), level);
@@ -117,4 +106,4 @@ YUI.add('primrose-log-reporter', function (Y) {
 
   Y.namespace('Primrose').LogReporter = LogReporter;
 
-});
+}());

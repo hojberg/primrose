@@ -1,5 +1,4 @@
-YUI.add('primrose-matchers', function (Y) {
-
+(function () {
   var Lang    = Y.Lang,
       YArray  = Y.Array,
       Matchers;
@@ -116,9 +115,4 @@ YUI.add('primrose-matchers', function (Y) {
 
   // export to the Primrose namespace
   Y.namespace('Primrose').Matchers = Matchers;
-
-},
-'0.0.1',
-{
-  requires: []
-});
+}());
