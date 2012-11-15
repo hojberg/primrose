@@ -1,0 +1,17 @@
+{
+    "name": "gallery-primrose",
+    "builds": {
+        "gallery-primrose": {
+            "jsfiles": [
+                "js/primrose.js",
+                "js/before_each.js",
+                "js/expectation.js",
+                "js/log_reporter.js",
+                "js/matchers.js",
+                "js/reportable.js",
+                "js/spec.js",
+                "js/suite.js"
+            ]
+        }
+    }
+}
