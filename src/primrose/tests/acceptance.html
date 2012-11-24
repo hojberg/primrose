@@ -9,14 +9,8 @@
   <body>
     <script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>
     <script>
-      YUI({
-        modules: {
-          'gallery-primrose': {
-            fullpath: '../../../build/gallery-primrose/gallery-primrose.js'
-          }
-        }
-      }).use('gallery-primrose', 'node', function (Y) {
 
+      YUI.add('matcher-spec', function (Y) {
         var P = Y.Primrose, 
             describe = P.describe, 
             beforeEach = P.beforeEach,
@@ -29,7 +23,6 @@
               expect( 1 ).not().toBe( 2 );
             });
           });
-          /*
 
           describe('toBeTypeof', function () {
             it('assets the type', function (expect) {
@@ -52,7 +45,6 @@
               expect( undefined ).not().toBeDefined();
             });
           });
-          */
 
           describe('toBeUndefined', function () {
             it('checks if undefined', function (expect) {
@@ -87,13 +79,31 @@
           });
         });
 
-        describe('word', function () {
-          describe('fucking rad', function () {
-            it('is something', function (expect) {
+      });
+
+      YUI.add('modular-spec', function (Y) {
+        var P = Y.Primrose, 
+            describe = P.describe, 
+            beforeEach = P.beforeEach,
+            it = P.it;
+
+        describe('Modular', function () {
+          describe('x', function () {
+            it('is b', function (expect) {
               expect( 1 ).toBe( 1 );
             });
           });
         });
+
+      });
+
+      YUI({
+        modules: {
+          'gallery-primrose': {
+            fullpath: '../../../build/gallery-primrose/gallery-primrose.js'
+          }
+        }
+      }).use('gallery-primrose', 'node', 'matcher-spec', 'modular-spec', function (Y) {
 
         Y.Primrose.addReporter(new Y.Primrose.LogReporter());
 

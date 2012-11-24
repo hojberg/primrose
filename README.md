@@ -6,20 +6,24 @@ BDD speccing framework for YUI
 # Writing a spec
 ```JavaScript
 YUI.add('user-spec', function (Y) {
+  var P           = Y.Primrose,
+      describe    = P.describe,
+      it          = P.it,
+      beforeEach  = P.beforeEach;
 
-  Y.Primrose.describe('User', function () {
+  describe('User', function () {
 
     var subject;
 
-    P.beforeEach(function () {
+    beforeEach(function () {
       subject = new Y.User({ 
         firstname: 'Simon', 
         lastname: 'Højberg' 
       });
     });
 
-    P.describe('name', function () {
-      P.it('combines first and last names', function (expect) {
+    describe('name', function () {
+      it('combines first and last names', function (expect) {
         expect( subject.get('name') ).toBe( 'Simon Højberg' );
       });
     });
