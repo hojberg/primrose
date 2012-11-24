@@ -30,7 +30,7 @@
       var spaces = '';
 
       for (i = 0; i < this._level; i++) {
-        spaces += '  ';
+        spaces += '.';
       }
 
       return spaces;

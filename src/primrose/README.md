@@ -41,3 +41,5 @@ YUI().use('user-spec', 'primrose', 'primrose-log-reporter', function (Y) {
 
 });
 ```
+
+Thanks @cmeik for being awesome!

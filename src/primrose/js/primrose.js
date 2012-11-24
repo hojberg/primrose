@@ -5,14 +5,6 @@
       _reporters  = [],
       ancestor;
 
-  // create top level ancestor
-  // TODO: remove top level
-  ancestor = new Y.Primrose.Suite({
-    description: 'Primrose specs'
-  });
-
-  topSuites.push(ancestor);
-
   /**
   create a new Primrose.Suite and sub suites/specs
 
@@ -25,20 +17,22 @@
       description: description
     });
 
-    ancestor.add(suite);
+    if (ancestor) {
+      ancestor.add(suite);
+    }
+    else {
+      topSuites.push(suite);
+    }
 
-    ancestor = (function () {
-      var old = ancestor;
-
+    // set up the ancestor for the nested `describe` calls
+    ancestor = (function (old) {
       ancestor = suite;
-
       block.call(suite);
 
       return old;
-    }());
+    }(ancestor));
 
     return suite;
-
   };
 
   /**

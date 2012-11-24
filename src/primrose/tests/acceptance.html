@@ -29,6 +29,7 @@
               expect( 1 ).not().toBe( 2 );
             });
           });
+          /*
 
           describe('toBeTypeof', function () {
             it('assets the type', function (expect) {
@@ -51,6 +52,7 @@
               expect( undefined ).not().toBeDefined();
             });
           });
+          */
 
           describe('toBeUndefined', function () {
             it('checks if undefined', function (expect) {
@@ -81,6 +83,14 @@
                 expect( 'foobar' ).toInclude('bar');
                 expect( 'foobar' ).not().toInclude('baz');
               });
+            });
+          });
+        });
+
+        describe('word', function () {
+          describe('fucking rad', function () {
+            it('is something', function (expect) {
+              expect( 1 ).toBe( 1 );
             });
           });
         });

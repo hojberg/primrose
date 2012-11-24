@@ -559,7 +559,7 @@ Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
       var spaces = '';
 
       for (i = 0; i < this._level; i++) {
-        spaces += '  ';
+        spaces += '.';
       }
 
       return spaces;
@@ -643,14 +643,6 @@ Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
       _reporters  = [],
       ancestor;
 
-  // create top level ancestor
-  // TODO: remove top level
-  ancestor = new Y.Primrose.Suite({
-    description: 'Primrose specs'
-  });
-
-  topSuites.push(ancestor);
-
   /**
   create a new Primrose.Suite and sub suites/specs
 
@@ -663,20 +655,22 @@ Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
       description: description
     });
 
-    ancestor.add(suite);
+    if (ancestor) {
+      ancestor.add(suite);
+    }
+    else {
+      topSuites.push(suite);
+    }
 
-    ancestor = (function () {
-      var old = ancestor;
-
+    // set up the ancestor for the nested `describe` calls
+    ancestor = (function (old) {
       ancestor = suite;
-
       block.call(suite);
 
       return old;
-    }());
+    }(ancestor));
 
     return suite;
-
   };
 
   /**
