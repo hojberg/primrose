@@ -36,7 +36,7 @@ Y.namespace('Primrose').MethodSpy = Y.Base.create('Primrose.methodSpy',
     @method replacement
     **/
     replacement: function () {
-      this.get('occurrences')++;
+      this.increment;
     }
 
 },

@@ -25,27 +25,7 @@ Y.namespace('Primrose').EventSpy = Y.Base.create('Primrose.eventSpy',
       var host        = this.get('host'),
           targetName  = this.get('targetName');
       
-      host.on(targetName, increment)
-
-
-
-      this.set('target', host[targetName])
-      host[targetName] = Y.bind(replacement, this);
-    },
-
-    /**
-    replacement method
-
-    @method increment
-    **/
-    increment: function () {
-      this.get('occurrences')++;
+      host.on(targetName, this.increment);
     }
 
-},
-{
-
-  ATTRS: {
-
-  }
 });

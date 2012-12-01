@@ -527,6 +527,228 @@ Y.namespace('Primrose').Expectation = Y.Base.create('primrose:expectation',
     }
   }
 });
+/**
+@class Spy
+@abstract
+@namespace Primrose
+@extends BaseCore
+@constructor
+**/
+Y.namespace('Primrose').Spy = Y.Base.create('Primrose.Spy',
+  Y.BaseCore,
+  [],
+{
+
+  increment: function () {
+    this.get('occurrences')++
+  }
+
+},
+{
+
+  ATTRS: {
+
+    /**
+    host object
+
+    @attribute host
+    @type {Object}
+    **/
+    host: {},
+
+    /**
+    name of the method, attr, or event being spied on
+
+    @attribute targetName
+    @type {String}
+    **/
+    targetName: {},
+    
+    /**
+    boolean representing whether target was fired/altered/called
+
+    @attribute hasOccured
+    @type {boolean}
+    **/
+    hasOccurred: {
+      valueFn: function () {
+        return occurrences > 0;
+      }
+    },
+
+    /**
+    number of times the target was fired/altered/called
+
+    @attribute occurrences
+    @type {Integer}
+    **/
+    occurrences: {
+      value: 0
+    }
+
+});
+/**
+@class MethodSpy
+@namespace Primrose
+@extends Y.Primrose.Spy
+@constructor
+**/
+Y.namespace('Primrose').MethodSpy = Y.Base.create('Primrose.methodSpy',
+  Y.Primrose.Spy,
+  [],
+{
+    /**
+    sets up the spy
+
+    **/
+    initializer: function () {
+      this.displace();
+    },
+
+    /**
+    displaces the target method on the host
+
+    @method displace
+    **/
+    displace: function () {
+      var host        = this.get('host'),
+          targetName  = this.get('targetName');
+      
+
+      this.set('target', host[targetName])
+      host[targetName] = Y.bind(replacement, this);
+    },
+
+    /**
+    replacement method
+
+    @method replacement
+    **/
+    replacement: function () {
+      this.increment;
+    }
+
+},
+{
+
+  ATTRS: {
+
+
+    /**
+    the method being overridden by replacement
+    stored here to be called through if need be
+
+    @attribute target
+    **/
+    target: {}
+
+  }
+});
+/**
+@class AttrSpy
+@namespace Primrose
+@extends Y.Primrose.Spy
+@constructor
+**/
+Y.namespace('Primrose').AttrSpy = Y.Base.create('Primrose.attrSpy',
+  Y.Primrose.Spy,
+  [],
+{
+    /**
+    sets up the spy
+
+    **/
+    initializer: function () {
+      this.listen();
+    },
+
+    /**
+    listens for the target event being fired
+
+    @method listen
+    **/
+    listen: function () {
+      var host        = this.get('host'),
+          targetName  = this.get('targetName');
+      
+      host.on(targetName, this.increment);
+    }
+
+},
+{
+
+  ATTRS: {
+
+    /**
+    @attribute getOccurrences
+    @type {Number}
+    **/
+    getOccurrences: {
+      value: 0
+    },
+
+    /**
+    @attribute setOccurrences
+    @type {Number}
+    **/
+    getOccurrences: {
+      value: 0
+    },
+
+        /**
+    @attribute getOccurred
+    @type {Booolean}
+    **/
+    getOccurred: {
+      valueFn: function () {
+        this.get('getOccurrences') > 0
+      }
+    },
+
+    /**
+    @attribute setOccurred
+    @type {Booolean}
+    **/
+    setOccurred: {
+      valueFn: function () {
+        this.get('setOccurrences') > 0
+      }
+    }
+
+  }
+
+});
+/**
+@class EventSpy
+@namespace Primrose
+@extends Y.Primrose.Spy
+@constructor
+**/
+Y.namespace('Primrose').EventSpy = Y.Base.create('Primrose.eventSpy',
+  Y.Primrose.Spy,
+  [],
+{
+    /**
+    sets up the spy
+
+    **/
+    initializer: function () {
+      this.listen();
+    },
+
+    /**
+    listens for the target event being fired
+
+    @method listen
+    **/
+    listen: function () {
+      var host        = this.get('host'),
+          targetName  = this.get('targetName');
+      
+      host.on(targetName, this.increment);
+    }
+
+});
 (function () {
   var LogReporter = function () {};
 

@@ -10,6 +10,10 @@ Y.namespace('Primrose').Spy = Y.Base.create('Primrose.Spy',
   [],
 {
 
+  increment: function () {
+    this.get('occurrences')++
+  }
+
 },
 {
 
