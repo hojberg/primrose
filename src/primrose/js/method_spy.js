@@ -23,7 +23,7 @@ Y.namespace('Primrose').MethodSpy = Y.Base.create('primrose.methodSpy',
         targetName  = this.get('targetName');
     
     this.set('target', host[targetName]);
-    host[targetName] = Y.bind(replacement, this);
+    host[targetName] = Y.bind(this.replacement, this);
   },
 
   /**

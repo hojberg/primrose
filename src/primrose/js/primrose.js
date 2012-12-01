@@ -81,7 +81,7 @@
   **/
   Y.Primrose.spyOn = function (host, type, targetName) {
     // uppercase the first letter
-    host = host.charAt(0).toUpperCase() + host.slice(1);
+    type = type.charAt(0).toUpperCase() + type.slice(1);
 
     return new Y.Primrose[type + 'Spy']({
       host: host,
