@@ -8,25 +8,22 @@ Y.namespace('Primrose').AttrSpy = Y.Base.create('Primrose.attrSpy',
   Y.Primrose.Spy,
   [],
 {
-    /**
-    sets up the spy
 
-    **/
-    initializer: function () {
-      this.listen();
-    },
+  initializer: function () {
+    this.listen();
+  },
 
-    /**
-    listens for the target event being fired
+  /**
+  listens for the target event being fired
 
-    @method listen
-    **/
-    listen: function () {
-      var host        = this.get('host'),
-          targetName  = this.get('targetName');
-      
-      host.on(targetName, this.increment);
-    }
+  @method listen
+  **/
+  listen: function () {
+    var host        = this.get('host'),
+        targetName  = this.get('targetName');
+    
+    host.on(targetName, this.increment, this);
+  }
 
 },
 {
@@ -45,17 +42,17 @@ Y.namespace('Primrose').AttrSpy = Y.Base.create('Primrose.attrSpy',
     @attribute setOccurrences
     @type {Number}
     **/
-    getOccurrences: {
+    setOccurrences: {
       value: 0
     },
 
-        /**
+    /**
     @attribute getOccurred
     @type {Booolean}
     **/
     getOccurred: {
-      valueFn: function () {
-        this.get('getOccurrences') > 0
+      getter: function () {
+        return this.get('getOccurrences') > 0;
       }
     },
 
@@ -64,8 +61,8 @@ Y.namespace('Primrose').AttrSpy = Y.Base.create('Primrose.attrSpy',
     @type {Booolean}
     **/
     setOccurred: {
-      valueFn: function () {
-        this.get('setOccurrences') > 0
+      getter: function () {
+        return this.get('setOccurrences') > 0;
       }
     }
 

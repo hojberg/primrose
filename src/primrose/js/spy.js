@@ -1,6 +1,5 @@
 /**
 @class Spy
-@abstract
 @namespace Primrose
 @extends BaseCore
 @constructor
@@ -10,8 +9,12 @@ Y.namespace('Primrose').Spy = Y.Base.create('Primrose.Spy',
   [],
 {
 
+  /**
+  @method increment
+  **/
   increment: function () {
-    this.get('occurrences')++
+    var occurrences = this.get('occurrences');
+    this.set('occurrences', occurrences + 1);
   }
 
 },
@@ -42,8 +45,8 @@ Y.namespace('Primrose').Spy = Y.Base.create('Primrose.Spy',
     @type {boolean}
     **/
     hasOccurred: {
-      valueFn: function () {
-        return occurrences > 0;
+      getter: function () {
+        return this.get('occurrences') > 0;
       }
     },
 
@@ -56,5 +59,5 @@ Y.namespace('Primrose').Spy = Y.Base.create('Primrose.Spy',
     occurrences: {
       value: 0
     }
-
+  }
 });

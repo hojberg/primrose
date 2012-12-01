@@ -8,36 +8,32 @@ Y.namespace('Primrose').MethodSpy = Y.Base.create('Primrose.methodSpy',
   Y.Primrose.Spy,
   [],
 {
-    /**
-    sets up the spy
 
-    **/
-    initializer: function () {
-      this.displace();
-    },
+  initializer: function () {
+    this.displace();
+  },
 
-    /**
-    displaces the target method on the host
+  /**
+  displaces the target method on the host
 
-    @method displace
-    **/
-    displace: function () {
-      var host        = this.get('host'),
-          targetName  = this.get('targetName');
-      
+  @method displace
+  **/
+  displace: function () {
+    var host        = this.get('host'),
+        targetName  = this.get('targetName');
+    
+    this.set('target', host[targetName]);
+    host[targetName] = Y.bind(replacement, this);
+  },
 
-      this.set('target', host[targetName])
-      host[targetName] = Y.bind(replacement, this);
-    },
+  /**
+  replacement method
 
-    /**
-    replacement method
-
-    @method replacement
-    **/
-    replacement: function () {
-      this.increment;
-    }
+  @method replacement
+  **/
+  replacement: function () {
+    this.increment();
+  }
 
 },
 {
