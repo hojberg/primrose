@@ -4,7 +4,7 @@
 @extends Y.Primrose.Spy
 @constructor
 **/
-Y.namespace('Primrose').MethodSpy = Y.Base.create('Primrose.methodSpy',
+Y.namespace('Primrose').MethodSpy = Y.Base.create('primrose.methodSpy',
   Y.Primrose.Spy,
   [],
 {

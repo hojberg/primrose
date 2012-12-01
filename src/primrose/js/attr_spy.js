@@ -4,27 +4,10 @@
 @extends Y.Primrose.Spy
 @constructor
 **/
-Y.namespace('Primrose').AttrSpy = Y.Base.create('Primrose.attrSpy',
+Y.namespace('Primrose').AttrSpy = Y.Base.create('primrose.attrSpy',
   Y.Primrose.Spy,
   [],
 {
-
-  initializer: function () {
-    this.listen();
-  },
-
-  /**
-  listens for the target event being fired
-
-  @method listen
-  **/
-  listen: function () {
-    var host        = this.get('host'),
-        targetName  = this.get('targetName');
-    
-    host.on(targetName, this.increment, this);
-  }
-
 },
 {
 
