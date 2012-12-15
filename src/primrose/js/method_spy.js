@@ -33,13 +33,13 @@ Y.namespace('Primrose').MethodSpy = Y.Base.create('primrose.methodSpy',
   **/
   replacement: function () {
     this.increment();
+    this.get('target')();
   }
 
 },
 {
 
   ATTRS: {
-
 
     /**
     the method being overridden by replacement
