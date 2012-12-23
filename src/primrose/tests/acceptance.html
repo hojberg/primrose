@@ -11,10 +11,11 @@
     <script>
 
       YUI.add('matcher-spec', function (Y) {
-        var P = Y.Primrose, 
-            describe = P.describe, 
-            beforeEach = P.beforeEach,
-            it = P.it;
+        var P           = Y.Primrose, 
+            describe    = P.describe, 
+            beforeEach  = P.beforeEach,
+            spyOn       = P.spyOn,
+            it          = P.it;
 
         describe('Matchers', function () {
 
@@ -76,6 +77,22 @@
                 expect( 'foobar' ).toInclude('bar');
                 expect( 'foobar' ).not().toInclude('baz');
               });
+            });
+          });
+        });
+
+        describe('Spies', function () {
+          describe('methodSpy', function () {
+            it('works', function (expect) {
+              var obj = {
+                meth: function () {}
+              };
+
+              var spy = spyOn( obj, 'method', 'meth' );
+
+              obj.meth();
+
+              expect( spy.get('occurrences') ).toBe( 1 );
             });
           });
         });
